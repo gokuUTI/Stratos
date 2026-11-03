@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>STRATOS | Plataforma móvil integral</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--nh:64px;--a:#b58cff;--b:#8936ff;--bg:#2d2833;--fg:#efe6ff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2d2833;--fg:#efe6ff}}
+:root[data-theme="dark"]{--bg:#2d2833;--fg:#efe6ff}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{margin:0;background:var(--bg);color:var(--fg);font-family:"Chakra Petch","Arial Narrow",sans-serif}
+#c{position:fixed;inset:0;width:100%;height:100%}
+.scrim{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 50%,rgba(0,0,0,.6)),linear-gradient(transparent 65%,rgba(0,0,0,.65))}
+.ui{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none;transition:opacity .7s;padding:calc(var(--nh) + env(safe-area-inset-top,0px) + clamp(16px,3vw,36px)) clamp(16px,4vw,48px) calc(clamp(16px,4vw,48px) + env(safe-area-inset-bottom,0px))}
+.ui:not(.on){opacity:0;visibility:hidden}
+h1,h2{margin:0;font-weight:700;line-height:.9;letter-spacing:.03em;text-shadow:0 0 10px var(--a),0 0 40px var(--a)}
+h1{font-size:clamp(2.4rem,8.5vw,6.5rem)}h2{font-size:clamp(2.4rem,8vw,6.5rem)}
+h1 small,h2 small{display:block;margin-top:.8rem;font-size:clamp(.85rem,1.6vw,1.1rem);font-weight:500;letter-spacing:.12em;color:var(--b);text-shadow:0 0 10px var(--b)}
+.f{animation:flick 5s steps(1) infinite}
+@keyframes flick{0%,6%,9%,62%,65%,100%{opacity:1}7%{opacity:.15}8%{opacity:.8}63%{opacity:.1}64%{opacity:.6}}
+.lead{margin:0;max-width:44ch;font-size:clamp(1rem,1.7vw,1.2rem);line-height:1.5;text-shadow:0 1px 8px #000}
+.alt{position:fixed;top:calc(var(--nh) + env(safe-area-inset-top,0px) + 14px);right:clamp(40px,5vw,64px);text-align:right;font-size:.85rem;letter-spacing:.1em;text-shadow:0 0 8px var(--b)}
+.alt b{display:block;font-size:clamp(1.6rem,3.5vw,2.6rem);color:var(--b)}
+.dots{position:fixed;right:clamp(10px,2vw,24px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px}
+.dots button{width:18px;height:18px;padding:0;border-radius:50%;background:rgba(9,7,10,.5);border:1.5px solid var(--b);box-shadow:0 0 8px var(--b);cursor:pointer}
+.dots button[aria-current=true]{background:var(--b)}
+.dots button:focus-visible{outline:2px solid var(--a);outline-offset:3px}
+.logo{position:fixed;right:clamp(16px,4vw,48px);bottom:calc(clamp(16px,4vw,48px) + env(safe-area-inset-bottom,0px));font-weight:700;letter-spacing:.25em;font-size:clamp(.9rem,1.6vw,1.2rem);opacity:.9;text-shadow:0 0 8px var(--b);pointer-events:none}
+.social{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;pointer-events:auto}
+.social a{color:var(--fg);text-decoration:none;font-weight:700;font-size:.95rem;border:1.5px solid var(--b);padding:9px 14px;background:rgba(45,40,51,.6);box-shadow:0 0 14px -2px var(--b);transition:background .2s,color .2s}
+.social a:hover{background:var(--b);color:#2d2833}
+.social a:focus-visible{outline:2px solid var(--a);outline-offset:3px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;max-width:min(900px,100%);margin-top:16px}
+.cards>div{background:rgba(45,40,51,.65);border:1.5px solid var(--b);padding:14px 16px;box-shadow:0 0 18px -4px var(--b);backdrop-filter:blur(4px)}
+.cards h3{margin:0 0 6px;font-size:1rem;letter-spacing:.08em;color:var(--a)}
+.cards p{margin:0;font-size:.92rem;line-height:1.45}
+@media(max-width:560px){.c4{grid-template-columns:1fr 1fr}.cards h3{font-size:.85rem}.cards{gap:8px;margin-top:12px}.cards>div{padding:10px 12px}.cards p{font-size:.82rem}.lead{font-size:.92rem}.social{gap:8px}.social a{padding:7px 10px;font-size:.85rem}}
+.ui h1,.ui h2,.ui .lead,.ui .cards>div,.ui .social{transition:transform 1.1s cubic-bezier(.2,.8,.2,1),filter 1s,opacity 1s}
+.ui:not(.on) h1,.ui:not(.on) h2{transform:translateY(44px);filter:blur(14px)}
+.ui:not(.on) .lead,.ui:not(.on) .cards>div,.ui:not(.on) .social{transform:translateY(24px);filter:blur(8px)}
+.foot{margin:16px 0 0;font-size:.75rem;letter-spacing:.12em;opacity:.7;text-shadow:0 1px 8px #000}
+.ui .cards>div:nth-child(4){transition-delay:.6s}.ui .lead{transition-delay:.15s}.ui .cards>div:nth-child(1),.ui .social{transition-delay:.3s}.ui .cards>div:nth-child(2){transition-delay:.4s}.ui .cards>div:nth-child(3){transition-delay:.5s}
+.load{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;z-index:9;transition:opacity 1.2s,visibility 1.2s}.load.done{opacity:0;visibility:hidden}
+.load b{font-size:clamp(2rem,6vw,4rem);letter-spacing:.3em;text-shadow:0 0 20px var(--a)}.load i{font-style:normal;color:var(--b);letter-spacing:.2em}
+.cur{position:fixed;left:0;top:0;width:34px;height:34px;margin:-17px 0 0 -17px;border:1.5px solid var(--b);border-radius:50%;pointer-events:none;z-index:8;box-shadow:0 0 12px var(--b);transition:width .3s,height .3s,margin .3s,background .3s}
+.cur.big{width:70px;height:70px;margin:-35px 0 0 -35px;background:rgba(137,54,255,.15)}
+@media(hover:none){.cur{display:none}}
+.nav{position:fixed;top:0;left:0;right:0;z-index:6;height:calc(var(--nh) + env(safe-area-inset-top,0px));padding:env(safe-area-inset-top,0px) clamp(16px,4vw,48px) 0;display:flex;align-items:center;justify-content:space-between;gap:12px;box-sizing:border-box;background:linear-gradient(rgba(45,40,51,.82),rgba(45,40,51,.35));border-bottom:1px solid rgba(137,54,255,.28);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.nav a{color:var(--fg);text-decoration:none;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.82rem;padding:9px 16px;border:1px solid transparent;border-radius:3px;transition:color .25s,border-color .25s,box-shadow .25s,background .25s,text-shadow .25s}
+.nav .brand{font-size:clamp(1rem,1.8vw,1.35rem);letter-spacing:.28em;padding-left:0;text-shadow:0 0 10px var(--a)}
+.nav nav{display:flex;gap:6px}
+.nav a:hover,.nav a:focus-visible,.nav nav a.on{color:var(--a);border-color:var(--a);background:rgba(187,166,224,.08);box-shadow:0 0 14px rgba(187,166,224,.55),inset 0 0 10px rgba(187,166,224,.18);text-shadow:0 0 10px var(--a);outline:none}
+.nav nav a.on:not(:hover):not(:focus-visible){border-color:rgba(187,166,224,.45);box-shadow:0 0 8px rgba(187,166,224,.3)}
+@media(max-width:560px){:root{--nh:56px}.nav nav{gap:2px}.nav a{font-size:.66rem;letter-spacing:.06em;padding:7px 6px}.nav .brand{font-size:.8rem;letter-spacing:.14em}}
+@media(max-width:560px){.nav .brand{display:none}.nav nav{flex:1;justify-content:space-between}.nav a{font-size:.52rem;letter-spacing:.01em;padding:7px 3px;flex:none}.nav nav{overflow-x:auto;scrollbar-width:none}.nav nav::-webkit-scrollbar{display:none}}
+.flash{position:fixed;inset:0;z-index:7;pointer-events:none;opacity:0;background:radial-gradient(circle,#efe6ff,#8936ff 60%,#2d2833)}
+.room-ui{position:fixed;inset:0;z-index:3;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .8s;display:flex;flex-direction:column;justify-content:space-between;padding:calc(var(--nh) + env(safe-area-inset-top,0px) + clamp(16px,3vw,36px)) clamp(16px,4vw,48px) calc(clamp(16px,4vw,48px) + env(safe-area-inset-bottom,0px))}
+body.rm .room-ui{opacity:1;visibility:visible}
+.room-ui .rl{font-size:.85rem;letter-spacing:.3em;color:var(--b);text-shadow:0 0 10px var(--b)}
+.room-ui .rb span{color:var(--b);letter-spacing:.2em;font-size:.9rem}
+.room-ui .rb b{display:block;font-size:clamp(1.6rem,4vw,3rem);letter-spacing:.04em;text-shadow:0 0 14px var(--a)}
+.room-ui .rb p{margin:.5rem 0 0;opacity:.8;font-size:.9rem}
+#back{position:absolute;right:clamp(16px,4vw,48px);bottom:calc(clamp(16px,4vw,48px) + env(safe-area-inset-bottom,0px));pointer-events:auto;cursor:pointer;font:700 .8rem "Chakra Petch",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--fg);background:rgba(45,40,51,.6);border:1px solid rgba(187,166,224,.45);border-radius:3px;padding:10px 16px;transition:color .25s,border-color .25s,box-shadow .25s,text-shadow .25s}
+#back:hover,#back:focus-visible{color:var(--a);border-color:var(--a);box-shadow:0 0 14px rgba(187,166,224,.55),inset 0 0 10px rgba(187,166,224,.18);text-shadow:0 0 10px var(--a);outline:none}
+body.inroom .ui,body.inroom .alt,body.inroom .dots{opacity:0!important;visibility:hidden!important}
+/* ---------- CONTACTO ---------- */
+.ctp{position:fixed;z-index:4;right:clamp(16px,4vw,48px);top:calc(var(--nh) + env(safe-area-inset-top,0px) + 24px);bottom:calc(clamp(16px,4vw,48px) + env(safe-area-inset-bottom,0px) + 64px);width:min(470px,44vw);display:flex;flex-direction:column;justify-content:center;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .6s,visibility .6s}
+body.ct .ctp,body.al2 .alp{opacity:1;visibility:visible}
+.cs{display:none;pointer-events:auto;max-height:100%;overflow-y:auto;box-sizing:border-box;background:rgba(45,40,51,.78);border:1.5px solid var(--b);padding:18px 20px;box-shadow:0 0 22px -4px var(--b);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+.cs.on{display:block;animation:csin .6s cubic-bezier(.2,.8,.2,1)}
+@keyframes csin{from{opacity:0;transform:translateY(18px);filter:blur(6px)}}
+.cs small{display:block;margin-bottom:6px;font-size:.75rem;letter-spacing:.22em;color:var(--b);text-shadow:0 0 8px var(--b)}
+.cs h3{margin:0 0 10px;font-size:clamp(1.15rem,2.2vw,1.5rem);letter-spacing:.07em;text-transform:uppercase;color:var(--a);text-shadow:0 0 12px var(--a)}
+.cs p{margin:0 0 10px;font-size:.95rem;line-height:1.5}
+.cs .hint{margin:12px 0 0;color:var(--b);letter-spacing:.14em;font-size:.8rem;text-transform:uppercase}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:8px}.fg .w{grid-column:1/-1}
+.cs input,.cs select,.cs textarea{width:100%;box-sizing:border-box;font:500 .9rem "Chakra Petch",sans-serif;color:var(--fg);background:rgba(16,12,19,.85);border:1px solid rgba(137,54,255,.55);border-radius:2px;padding:9px 10px;resize:vertical}
+.cs option{background:#2d2833;color:var(--fg)}
+.cs input:focus-visible,.cs select:focus-visible,.cs textarea:focus-visible{outline:none;border-color:var(--a);box-shadow:0 0 10px rgba(187,166,224,.5)}
+.cs ::placeholder{color:rgba(208,195,243,.55)}
+.bt{display:inline-block;font:700 .85rem "Chakra Petch",sans-serif;color:var(--fg);text-decoration:none;border:1.5px solid var(--b);padding:9px 14px;background:rgba(45,40,51,.6);box-shadow:0 0 14px -2px var(--b);cursor:pointer;transition:background .2s,color .2s}
+.bt:hover,.bt:focus-visible{background:var(--b);color:#2d2833;outline:none}
+.cs .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.cs .social{margin-top:6px}
+.cs .note{font-size:.85rem;color:var(--a);opacity:.9;margin:12px 0 0}.cs .bn b{display:block;color:var(--a);letter-spacing:.06em;margin-bottom:2px}
+#mapf{display:block;width:100%;height:clamp(150px,26vh,230px);border:1.5px solid var(--b);margin:8px 0 4px;background:#100d13;filter:invert(.92) hue-rotate(180deg) saturate(.7)}
+@media(max-width:760px){.ctp{left:12px;right:12px;width:auto;top:auto;bottom:calc(112px + env(safe-area-inset-bottom,0px));max-height:50vh}.cs{padding:14px}.cs p{font-size:.88rem}.fg{grid-template-columns:1fr}body.ct .room-ui .rb p,body.al2 .room-ui .rb p{display:none}}
+/* ---------- PROCESO ---------- */
+.prp{position:fixed;z-index:4;right:clamp(16px,4vw,48px);top:calc(var(--nh) + env(safe-area-inset-top,0px) + 100px);bottom:calc(clamp(16px,4vw,48px) + env(safe-area-inset-bottom,0px) + 64px);width:min(480px,44vw);display:flex;flex-direction:column;justify-content:center;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .6s,visibility .6s}
+body.pr .prp{opacity:1;visibility:visible}
+.pw{display:none;pointer-events:auto;background:rgba(45,40,51,.74);border:1.5px solid var(--b);box-shadow:0 0 26px -4px var(--b),inset 0 0 30px rgba(137,54,255,.08);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.pw.on{display:block;animation:pwin .8s cubic-bezier(.2,.9,.2,1)}
+@keyframes pwin{0%{opacity:0;transform:translateY(30px) scale(.88);filter:blur(10px)}60%{opacity:1;filter:blur(0)}100%{transform:none}}
+.pb{display:flex;align-items:center;gap:7px;padding:9px 12px;border-bottom:1px solid rgba(137,54,255,.45);background:rgba(137,54,255,.1)}
+.pb i{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--b)}.pb i:first-child{background:var(--b)}
+.pb span{margin-left:auto;font-size:.7rem;letter-spacing:.22em;color:var(--b)}
+.pc{padding:18px 20px 20px}
+.pc small{display:block;margin-bottom:6px;font-size:.75rem;letter-spacing:.22em;color:var(--b);text-shadow:0 0 8px var(--b)}
+.pc h3{margin:0 0 10px;font-size:clamp(1.15rem,2.2vw,1.5rem);letter-spacing:.07em;text-transform:uppercase;color:var(--a);text-shadow:0 0 12px var(--a)}
+.pc p{margin:0;font-size:.98rem;line-height:1.55}
+.pg{display:flex;gap:6px;margin-top:16px}.pg b{flex:1;height:4px;background:rgba(137,54,255,.25)}.pg b.on{background:var(--a);box-shadow:0 0 8px var(--a)}
+.pfoot{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(clamp(16px,4vw,48px) + env(safe-area-inset-bottom,0px) + 4px);z-index:3;margin:0;font-size:.72rem;letter-spacing:.12em;opacity:0;visibility:hidden;transition:opacity .8s;text-shadow:0 1px 8px #000;pointer-events:none;white-space:nowrap}
+body.pr4 .pfoot{opacity:.75;visibility:visible}
+body.pr .alt{opacity:1!important;visibility:visible!important}
+@media(max-width:760px){.prp{left:12px;right:12px;width:auto;top:auto;bottom:calc(112px + env(safe-area-inset-bottom,0px));max-height:50vh}.pfoot{display:none}}
+</style>
+</head>
+<body>
+<canvas id="c" aria-label="Ciudad cyberpunk bajo la lluvia que se recorre con el scroll"></canvas>
+<div class="scrim"></div>
+<div class="load" id="ld"><b>STRATOS</b><i id="lp">0%</i></div>
+<div class="cur" id="cu"></div>
+<script>(function(){var l=document.getElementById("ld"),p=document.getElementById("lp"),s=performance.now();function u(){var n=performance.now()-s,v=Math.min(100,n/22);p.textContent=Math.floor(v)+"%";if((v>=100&&document.readyState==="complete")||n>8000){l.classList.add("done");return}requestAnimationFrame(u)}u()})()</script>
+<div class="ui on"><h1>STRA<span class="f">T</span>OS<br>HUB MÓVIL<small>PLATAFORMA MÓVIL INTEGRAL · INFOSOFT</small></h1><p class="lead">Centralizamos la gestión de aplicaciones, optimizamos el rendimiento en tiempo real con el Modo Gaming y conectamos a los usuarios en un ecosistema comunitario. Baja para conocerlo y mueve el cursor para mirar alrededor.</p></div>
+<div class="ui"><h2>EL<br>PROYECTO<small>INTRODUCCIÓN</small></h2><div><p class="lead">Los sistemas operativos móviles tratan las tiendas de aplicaciones como la interfaz principal. Stratos responde con un hub móvil centralizado que prioriza la personalización, la monitorización de hardware y batería, y el control de hábitos de uso.</p>
+<div class="cards"><div><h3>PROBLEMA</h3><p>Las tiendas limitan la experiencia: no integran análisis de rendimiento en tiempo real ni un espacio comunitario abierto.</p></div><div><h3>SOLUCIÓN</h3><p>Un hub móvil que reúne gestión de apps, telemetría de hardware y redes de interacción social.</p></div><div><h3>ENFOQUE</h3><p>Investigación aplicada y desarrollo iterativo e incremental en siete fases.</p></div></div></div></div>
+<div class="ui"><h2>MÓDULOS<small>ARQUITECTURA MODULAR</small></h2><div><p class="lead">Una arquitectura modular con tres espacios: Gaming, Casual y Comunidad.</p>
+<div class="cards c4"><div><h3>MODO GAMING</h3><p>Telemetría en tiempo real de batería, CPU, GPU y horas de juego.</p></div><div><h3>BIBLIOTECA</h3><p>Gestiona tus apps, el historial de compras y la compatibilidad.</p></div><div><h3>OPTIMIZACIÓN</h3><p>Comprobador de requisitos y perfiles de optimización de rendimiento.</p></div><div><h3>COMUNIDAD</h3><p>Reseñas, guías, parches y mods creados por los usuarios.</p></div></div></div></div>
+<div class="ui"><h2>RESULTADOS<small>ALCANZADOS</small></h2><div><p class="lead">Lo que entrega la investigación: diagnóstico, plataforma, calidad y salidas.</p>
+<div class="cards c4"><div><h3>DIAGNÓSTICO</h3><p>Monitoreo en tiempo real de CPU, GPU, batería y uso por sesión.</p></div><div><h3>PLATAFORMA</h3><p>Arquitectura modular: Gaming, Casual y Comunidad.</p></div><div><h3>CALIDAD</h3><p>Matriz comparativa de características frente a Google Play Store.</p></div><div><h3>SALIDAS</h3><p>Comprobador de requisitos, perfiles de optimización y foros.</p></div></div></div></div>
+<div class="ui"><h2>METODOLOGÍA<small>SIETE FASES ITERATIVAS</small></h2><div><p class="lead">Investigación aplicada, de alcance descriptivo y exploratorio, con desarrollo iterativo e incremental.</p>
+<div class="cards c4"><div><h3>01 · PROBLEMA</h3><p>Requerimientos funcionales y técnicos, y arquitectura de módulos.</p></div><div><h3>02 · DESARROLLO</h3><p>Integración de módulos y procesamiento de telemetría.</p></div><div><h3>03 · INTERFAZ</h3><p>Visualización y diseño de la interfaz móvil.</p></div><div><h3>04 · EVALUACIÓN</h3><p>Pruebas técnicas, funcionales, validación y evaluación.</p></div></div></div></div>
+<div class="ui"><h2>COMUNIDAD<small>CENTRO COMUNITARIO</small></h2><div><p class="lead">Un espacio abierto para reseñas, guías, parches y mods que impulsa la colaboración entre usuarios.</p>
+<nav class="social" aria-label="Canal de comunidad"><a href="mailto:samuelvalencia@ucundinamarca.edu.co,santiagoserrano@ucundinamarca.edu.co,dssalamanca@ucundinamarca.edu.co?subject=Comunidad%20Stratos">Escribir al equipo</a><a href="#" data-page="alianzas">Descender a Comunidad ↓</a></nav></div></div>
+<div class="ui"><h2>CONTACTO<small>EQUIPO INFOSOFT</small></h2><div><p class="lead">Escríbenos para conocer más del proyecto, probar el prototipo o colaborar con nosotros.</p>
+<nav class="social" aria-label="Contacto del equipo"><a href="mailto:samuelvalencia@ucundinamarca.edu.co">Samuel Valencia</a><a href="mailto:santiagoserrano@ucundinamarca.edu.co">Santiago Serrano</a><a href="mailto:dssalamanca@ucundinamarca.edu.co">Daniel Salamanca</a></nav><p class="foot">© 2026 STRATOS · INFOSOFT · Universidad de Cundinamarca</p></div></div>
+<div class="flash" id="fsh"></div>
+<div class="room-ui"><div class="rl" id="hl">OBJETIVOS</div><div class="rb"><span id="hn">01 / 04</span><b id="ht">OBJETIVO GENERAL</b><p id="hp">Baja para girar el cubo</p></div><button id="back" type="button">← Volver a la ciudad</button></div>
+<div class="ctp" id="ctp" role="region" aria-label="Contacto">
+<section class="cs on"><small>01 · CONTACTO</small><h3>Conoce el proyecto</h3><p>Stratos es una investigación aplicada de INFOSOFT que entrega una propuesta metodológica, un diseño conceptual y un prototipo de arquitectura.</p><p class="hint">Baja para continuar ↓</p></section>
+<section class="cs"><small>02 · CONTACTO</small><h3>Escríbenos</h3>
+<form id="cf" autocomplete="on"><div class="fg"><input name="n" aria-label="Nombre" placeholder="Nombre *" required autocomplete="name"><input name="e" aria-label="Institución" placeholder="Institución" autocomplete="organization"><input name="c" type="email" aria-label="Correo" placeholder="Correo *" required autocomplete="email"><input name="t" type="tel" aria-label="Teléfono" placeholder="Teléfono" autocomplete="tel"><select class="w" name="s" aria-label="Motivo del contacto"><option value="">Motivo del contacto</option><option>Consulta sobre el proyecto</option><option>Colaboración académica</option><option>Prueba del prototipo</option><option>Otro</option></select><textarea class="w" name="m" rows="3" aria-label="Mensaje" placeholder="Cuéntanos qué te gustaría saber de Stratos"></textarea></div>
+<div class="row"><button class="bt" type="submit">Enviar por correo</button><button class="bt" type="button" id="cfw">Copiar mensaje</button></div></form>
+<p class="note">Respondemos al correo institucional del equipo.</p></section>
+<section class="cs"><small>03 · EQUIPO</small><h3>Autores</h3><p>Equipo INFOSOFT, Universidad de Cundinamarca.</p>
+<iframe id="mapf" title="" style="display:none" referrerpolicy="no-referrer"></iframe>
+<p class="bn"><b>Samuel Andrés Valencia Martínez</b>samuelvalencia@ucundinamarca.edu.co</p><p class="bn"><b>Santiago Serrano Zuleta</b>santiagoserrano@ucundinamarca.edu.co</p><p class="bn"><b>Daniel Santiago Salamanca Montoya</b>dssalamanca@ucundinamarca.edu.co</p></section>
+<section class="cs"><small>04 · CANALES DIRECTOS</small><h3>Canales directos</h3><p>Escríbenos por correo institucional.</p>
+<div class="row"><a class="bt" href="mailto:samuelvalencia@ucundinamarca.edu.co">Samuel</a><a class="bt" href="mailto:santiagoserrano@ucundinamarca.edu.co">Santiago</a><a class="bt" href="mailto:dssalamanca@ucundinamarca.edu.co">Daniel</a></div><p class="hint">Sigue subiendo: referencias ↑</p></section>
+<section class="cs"><small>05 · REFERENCIAS</small><h3>Referencias</h3>
+<p class="bn"><b>American Psychological Association (2020)</b>Publication manual of the American Psychological Association (7th ed.). doi.org/10.1037/0000165-000</p><p class="bn"><b>Sommerville, I. (2019)</b>Ingeniería del Software (10.ª ed.). Pearson Educación.</p><p class="bn"><b>Valve Corporation (2024)</b>Steam Ecosystem and Community Architecture Guidelines. Valve Developer Community.</p></section>
+</div>
+<div class="prp" id="prp" role="region" aria-label="Metodología"><section class="pw"><div class="pb"><i></i><i></i><i></i><span>STRATOS</span></div><div class="pc"><small>01 · METODOLOGÍA</small><h3>Problema y arquitectura</h3><p>Definimos el problema y los requerimientos funcionales y técnicos, y diseñamos la arquitectura modular: Gaming, Casual y Comunidad.</p><div class="pg"><b class="on"></b><b></b><b></b><b></b></div></div></section><section class="pw"><div class="pb"><i></i><i></i><i></i><span>STRATOS</span></div><div class="pc"><small>02 · METODOLOGÍA</small><h3>Desarrollo y telemetría</h3><p>Desarrollamos e integramos los módulos y procesamos la telemetría de CPU, GPU, batería y horas de juego.</p><div class="pg"><b class="on"></b><b class="on"></b><b></b><b></b></div></div></section><section class="pw"><div class="pb"><i></i><i></i><i></i><span>STRATOS</span></div><div class="pc"><small>03 · METODOLOGÍA</small><h3>Visualización e interfaz</h3><p>Construimos la interfaz móvil para gestionar la biblioteca, el historial de compras y la compatibilidad.</p><div class="pg"><b class="on"></b><b class="on"></b><b class="on"></b><b></b></div></div></section><section class="pw"><div class="pb"><i></i><i></i><i></i><span>STRATOS</span></div><div class="pc"><small>04 · METODOLOGÍA</small><h3>Pruebas y evaluación</h3><p>Pruebas técnicas y funcionales; validamos y evaluamos frente a Google Play Store con una matriz comparativa.</p><div class="pg"><b class="on"></b><b class="on"></b><b class="on"></b><b class="on"></b></div></div></section></div>
+<p class="pfoot">© 2026 STRATOS · INFOSOFT · Universidad de Cundinamarca</p>
+<div class="ctp alp" id="alp" role="region" aria-label="Comunidad">
+<section class="cs on"><small>01 · COMUNIDAD</small><h3>Ecosistema colaborativo</h3><p>El centro comunitario impulsa la colaboración y el intercambio de contenido creado por los usuarios, y enriquece la experiencia de juego móvil.</p><p class="hint">Baja para continuar ↓</p></section>
+<section class="cs"><small>02 · COMUNIDAD</small><h3>Únete a la comunidad</h3><p>Cuéntanos cómo te gustaría aportar a Stratos.</p>
+<form id="af" autocomplete="on"><div class="fg"><input name="n" aria-label="Nombre" placeholder="Nombre *" required autocomplete="name"><input name="e" aria-label="Usuario o institución" placeholder="Usuario o institución" autocomplete="organization"><input name="c" type="email" aria-label="Correo" placeholder="Correo *" required autocomplete="email"><input name="t" type="tel" aria-label="Teléfono" placeholder="Teléfono" autocomplete="tel"><select class="w" name="s" aria-label="Tipo de aporte"><option value="">Tipo de aporte</option><option>Reseña</option><option>Guía</option><option>Parche</option><option>Mod</option><option>Otro</option></select><textarea class="w" name="m" rows="3" aria-label="Mensaje" placeholder="Cuéntanos tu idea o aporte"></textarea></div>
+<div class="row"><button class="bt" type="submit">Enviar por correo</button><button class="bt" type="button" id="afw">Copiar mensaje</button></div></form></section>
+<section class="cs"><small>03 · COMUNIDAD</small><h3>Contenido comunitario</h3><p>Lo que podrás encontrar y compartir.</p>
+<p class="bn"><b>Reseñas y guías</b>Opiniones y guías de los usuarios para elegir y aprender mejor.</p><p class="bn"><b>Parches y mods</b>Intercambio de parches y mods creados por la propia comunidad.</p><p class="bn"><b>Foros de interacción</b>Redes de interacción social y comunitaria dentro del hub móvil.</p></section>
+<section class="cs"><small>04 · PIE DE PÁGINA</small><h3>STRATOS, plataforma móvil integral</h3><p>Escríbenos por correo institucional.</p>
+<nav class="social" aria-label="Contacto del equipo"><a href="mailto:samuelvalencia@ucundinamarca.edu.co">Samuel Valencia</a><a href="mailto:santiagoserrano@ucundinamarca.edu.co">Santiago Serrano</a><a href="mailto:dssalamanca@ucundinamarca.edu.co">Daniel Salamanca</a></nav>
+<p class="foot">© 2026 STRATOS · INFOSOFT · Universidad de Cundinamarca</p></section>
+</div>
+<div class="alt">ALTITUD<b id="al">264 m</b></div>
+<!-- MENÚ: cambia cada href por la página real (por ejemplo servicios.html). Mientras valga "#", el botón no hace nada. -->
+<header class="nav"><a class="brand" href="#" data-page="inicio" aria-label="STRATOS, ir al inicio">STRATOS</a><nav aria-label="Navegación principal"><a class="on" href="#" data-page="inicio" aria-current="page">Inicio</a><a href="#" data-page="servicios">Módulos</a><a href="#" data-page="portafolio">Resultados</a><a href="#" data-page="proceso">Metodología</a><a href="#" data-page="contacto">Contacto</a><a href="#" data-page="alianzas">Comunidad</a><a href="#" data-page="nosotros">Objetivos</a></nav></header>
+<nav class="dots" aria-label="Pisos"></nav>
+<div style="height:900vh"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+
+<script>
+const T=THREE,cv=document.getElementById('c'),A=0xb58cff,B=0x8936ff,F=0xefe6ff,C=h=>new T.Color(h),rnd=Math.random,sm=(a,b,x)=>{x=Math.min(1,Math.max(0,(x-a)/(b-a)));return x*x*(3-2*x)};
+let R;try{R=new T.WebGLRenderer({canvas:cv,antialias:true})}catch(e){document.body.insertAdjacentHTML('beforeend','<p style="position:fixed;top:45%;width:100%;text-align:center">Tu navegador no soporta WebGL.</p>');throw e}
+R.setPixelRatio(Math.min(devicePixelRatio,1.5));R.outputEncoding=T.LinearEncoding;R.toneMapping=T.NoToneMapping;R.shadowMap.enabled=true;R.shadowMap.type=T.PCFSoftShadowMap;
+const scene=new T.Scene(),cam=new T.PerspectiveCamera(60,1,.5,1500);scene.add(cam);
+const cvs=(w,h)=>{const c=document.createElement('canvas');c.width=w;c.height=h;return c};
+const tex=(c,s)=>{const t=new T.CanvasTexture(c);t.wrapS=t.wrapT=T.RepeatWrapping;t.anisotropy=8;if(s)t.encoding=T.sRGBEncoding;return t};
+const bas=(c,o)=>new T.MeshBasicMaterial(Object.assign({color:c},o||{}));
+const GC=cvs(64,64),gx=GC.getContext('2d'),rg0=gx.createRadialGradient(32,32,0,32,32,32);[[0,1],[.3,.35],[1,0]].forEach(([s,a])=>rg0.addColorStop(s,`rgba(255,255,255,${a})`));gx.fillStyle=rg0;gx.fillRect(0,0,64,64);const GT=new T.CanvasTexture(GC);
+const add={blending:T.AdditiveBlending,depthWrite:false,transparent:true};
+function glow(col,s,x,y,z,par){const p=new T.Sprite(new T.SpriteMaterial(Object.assign({map:GT,color:col},add)));p.scale.set(s,s,1);p.position.set(x,y,z);(par||scene).add(p);return p}
+// ---------- Cielo nocturno con nubes, niebla del color de la paleta ----------
+const skyU={top:{value:C(0x0b080d)},mid:{value:C(0x201926)},bot:{value:C(0x5b5366)}};
+const skyM=new T.ShaderMaterial({uniforms:skyU,side:T.BackSide,depthWrite:false,fog:false,vertexShader:'varying vec3 v;void main(){v=normalize(position);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+fragmentShader:'uniform vec3 top,mid,bot;varying vec3 v;void main(){float h=v.y;vec3 c=mix(bot,mid,smoothstep(-.05,.2,h));c=mix(c,top,smoothstep(.15,.8,h));gl_FragColor=vec4(pow(c,vec3(2.2)),1.);}'});
+const skyG=new T.SphereGeometry(1000,32,16),sky=new T.Mesh(skyG,skyM);scene.add(sky);
+scene.fog=new T.FogExp2(0x201926,.0042);scene.fog.color.copy(skyU.bot.value).convertSRGBToLinear();
+// Entorno para reflejos: cielo + neones lejanos (se reflejan en vidrio, carros, asfalto y charcos)
+const es=new T.Scene();es.add(new T.Mesh(skyG,skyM));
+for(let i=0;i<60;i++){const a=rnd()*6.28,m=new T.Mesh(new T.BoxGeometry(20+rnd()*60,4+rnd()*40,3),bas([A,B,F][i%3]));m.position.set(Math.cos(a)*350,15+rnd()*70,Math.sin(a)*350);m.lookAt(0,m.position.y,0);es.add(m)}
+const pm=new T.PMREMGenerator(R);scene.environment=pm.fromScene(es).texture;
+// ---------- Luces ----------
+const hemi=new T.HemisphereLight(B,0x2d2833,.55);scene.add(hemi);
+const moon=new T.DirectionalLight(0x9481a6,.7);moon.castShadow=true;moon.shadow.mapSize.set(2048,2048);Object.assign(moon.shadow.camera,{left:-230,right:230,top:230,bottom:-230,near:1,far:900});moon.shadow.bias=-.0005;moon.shadow.normalBias=.4;scene.add(moon,moon.target);
+const camL=new T.PointLight(A,1.6,110,2);cam.add(camL);const towL=new T.PointLight(B,2.5,260,2);towL.position.set(0,100,0);scene.add(towL);
+// ---------- Fachadas: ventanas encendidas con colores de la paleta ----------
+const WB=cvs(256,512),wg=WB.getContext('2d'),WE=cvs(256,512),eg=WE.getContext('2d'),lc=['#b58cff','#8936ff','#efe6ff'];
+wg.fillStyle='#231d27';wg.fillRect(0,0,256,512);eg.fillStyle='#000';eg.fillRect(0,0,256,512);
+for(let y=0;y<16;y++)for(let x=0;x<8;x++){const px=x*32+4,py=y*32+6,gr=wg.createLinearGradient(0,py,0,py+20);gr.addColorStop(0,'#2a2330');gr.addColorStop(1,'#130f17');wg.fillStyle=gr;wg.fillRect(px,py,24,20);
+ if(rnd()<.4){eg.globalAlpha=.45+rnd()*.55;eg.fillStyle=lc[(rnd()*3)|0];eg.fillRect(px,py,24,20)}}
+const tB=tex(WB,1),tE=tex(WE,1),mk=(c,m,r)=>new T.MeshStandardMaterial({color:c,map:tB,emissive:0xffffff,emissiveMap:tE,emissiveIntensity:1.25,metalness:m,roughness:r,envMapIntensity:1.6});
+const M=[mk(0xffffff,.55,.3),mk(0xd3c5e2,.6,.25),mk(0xbea8d0,.5,.35),mk(0xded5eb,.55,.28)],Mt=mk(0xd3c5e2,.9,.1),nA=bas(A),nB=bas(B);
+function bld(x,z,w,h,m){const g=new T.BoxGeometry(w,h,w),u=g.attributes.uv;for(let i=0;i<u.count;i++)u.setXY(i,u.getX(i)*w/28,u.getY(i)*h/64);const o=new T.Mesh(g,m);o.position.set(x,h/2,z);o.castShadow=o.receiveShadow=true;scene.add(o);return o}
+for(let i=-6;i<=6;i++)for(let j=-4;j<=6;j++){if(!i&&!j)continue;const d=Math.hypot(i,j);
+ for(let a=0;a<2;a++)for(let b=0;b<2;b++){if(rnd()<.08)continue;const w=11+rnd()*4,h=Math.max(12,14+Math.pow(rnd(),2.2)*(140-d*16)+Math.max(0,4-d)*8),x=i*46+(a-.5)*16,z=j*46+(b-.5)*16;
+  bld(x,z,w,h,M[(rnd()*4)|0]);if(rnd()<.3){const s=new T.Mesh(new T.BoxGeometry(w+.2,.6,w+.2),rnd()<.5?nA:nB);s.position.set(x,h,z);scene.add(s)}}}
+// ---------- Ciudad ampliada: más manzanas alrededor, fusionadas en 4 mallas para no pesar ----------
+function mergeB(list,mat){if(!list.length)return;const gs=list.map(({x,z,w,h})=>{const g=new T.BoxGeometry(w,h,w),u=g.attributes.uv;for(let i=0;i<u.count;i++)u.setXY(i,u.getX(i)*w/28,u.getY(i)*h/64);g.translate(x,h/2,z);return g});
+ let nv=0,ni=0;gs.forEach(g=>{nv+=g.attributes.position.count;ni+=g.index.count});const P=new Float32Array(nv*3),Nn=new Float32Array(nv*3),U=new Float32Array(nv*2),I=new Uint16Array(ni);let vo=0,io=0;
+ gs.forEach(g=>{P.set(g.attributes.position.array,vo*3);Nn.set(g.attributes.normal.array,vo*3);U.set(g.attributes.uv.array,vo*2);const ix=g.index.array;for(let i=0;i<ix.length;i++)I[io+i]=ix[i]+vo;vo+=g.attributes.position.count;io+=ix.length;g.dispose()});
+ const G=new T.BufferGeometry();G.setAttribute('position',new T.BufferAttribute(P,3));G.setAttribute('normal',new T.BufferAttribute(Nn,3));G.setAttribute('uv',new T.BufferAttribute(U,2));G.setIndex(new T.BufferAttribute(I,1));
+ const m=new T.Mesh(G,mat);m.receiveShadow=true;scene.add(m)}
+{const grp=[[],[],[],[]];for(let i=-9;i<=9;i++)for(let j=-10;j<=9;j++){if(i>=-6&&i<=6&&j>=-4&&j<=6)continue;if(j>=-7&&j<=-5)continue;const d=Math.hypot(i,j);
+  for(let a=0;a<2;a++)for(let b=0;b<2;b++){if(rnd()<.1)continue;const w=11+rnd()*4,h=Math.max(12,12+Math.pow(rnd(),2.2)*(125-d*7.5)),x=i*46+(a-.5)*16,z=j*46+(b-.5)*16;grp[(rnd()*4)|0].push({x,z,w,h})}}
+ grp.forEach((l,q)=>mergeB(l,M[q]))}
+// ---------- Edificios con video mapping animado (lo que hace STRATOS) ----------
+const mapped=[[38,38],[38,-54],[38,84]].map(([x,z],i)=>{const c=cvs(256,512),tx=tex(c,1),m=new T.MeshStandardMaterial({color:0x17131b,metalness:.6,roughness:.25,emissive:0xffffff,emissiveMap:tx,emissiveIntensity:1.9,envMapIntensity:1.6}),o=new T.Mesh(new T.BoxGeometry(15.6,165,15.6),m);o.position.set(x,82.5,z);scene.add(o);return{g:c.getContext('2d'),tx,i}});
+function vm(q,t){const g=q.g,i=q.i;g.globalAlpha=1;g.fillStyle='#0b080d';g.fillRect(0,0,256,512);
+ for(let y=0;y<12;y++){g.fillStyle=['#b58cff','#8936ff','#efe6ff'][(y+i)%3];g.globalAlpha=.85;g.fillRect(0,((y*48+t*(40+i*25))%576)-32,256,5+(y%3)*5)}
+ g.strokeStyle='#8936ff';g.lineWidth=3;for(let r=0;r<4;r++){const rr=(t*60+r*70+i*40)%280;g.globalAlpha=1-rr/280;g.beginPath();g.arc(128,256+Math.sin(t+i)*120,rr,0,6.28);g.stroke()}q.tx.needsUpdate=true}
+// ---------- Torre STRATOS ----------
+bld(0,0,26,250,Mt).position.y=125;
+[[1,1,A],[-1,1,B],[1,-1,B],[-1,-1,A]].forEach(([a,b,c])=>{const m=new T.Mesh(new T.BoxGeometry(.6,250,.6),bas(c));m.position.set(13*a,125,13*b);scene.add(m)});
+const dark=bas(0x151019);[1,90,170,250].forEach((y,i)=>{const g=new T.BoxGeometry(34,2,34),m=new T.Mesh(g,dark);m.position.y=y;scene.add(m);const e=new T.LineSegments(new T.EdgesGeometry(g),new T.LineBasicMaterial({color:i%2?B:A}));e.position.y=y;scene.add(e)});
+const band=new T.Mesh(new T.BoxGeometry(28,14,28),bas(B,Object.assign({opacity:.2},add)));band.position.y=170;scene.add(band);
+const hc=cvs(128,80),hg=hc.getContext('2d');hg.strokeStyle='#8936ff';hg.lineWidth=3;hg.strokeRect(2,2,124,76);hg.fillStyle='#8936ff';for(let j=0;j<6;j++){hg.globalAlpha=.75;hg.fillRect(10,10+j*11,20+rnd()*90,5)}
+const HT=new T.CanvasTexture(hc),holo=new T.Group();holo.position.y=172;scene.add(holo);
+for(let k=0;k<4;k++){const m=new T.Mesh(new T.PlaneGeometry(11,7),bas(0xffffff,Object.assign({map:HT,side:T.DoubleSide},add)));m.position.set(Math.sin(k*1.57)*21,Math.sin(k*2)*2,Math.cos(k*1.57)*21);m.rotation.y=k*1.57;holo.add(m)}
+const ring=new T.Mesh(new T.TorusGeometry(30,1,8,72),dark);ring.rotation.x=Math.PI/2;ring.position.y=88.4;scene.add(ring);
+const rn=new T.Mesh(new T.TorusGeometry(30,.2,6,72),bas(B));rn.rotation.x=Math.PI/2;rn.position.y=89.6;scene.add(rn);
+const train=[];for(let i=0;i<10;i++){const m=new T.Mesh(new T.BoxGeometry(5,2.2,2.4),bas(F)),st=new T.Mesh(new T.BoxGeometry(4.6,.5,2.5),bas(i%2?A:B));st.position.y=-.5;m.add(st);scene.add(m);train.push(m)}
+const head=glow(B,12,0,90,0),ant=new T.Mesh(new T.CylinderGeometry(.3,.6,40,6),bas(0x765d99));ant.position.y=270;scene.add(ant);
+const beacon=glow(F,10,0,291,0),rr=new T.Mesh(new T.TorusGeometry(18,.3,6,64),bas(A));rr.rotation.x=Math.PI/2;rr.position.y=258;scene.add(rr);
+function sign(t,col,a,y){const c=cvs(256,64),g=c.getContext('2d');g.font='700 44px "Chakra Petch",sans-serif';g.textAlign='center';g.shadowColor=col;g.shadowBlur=14;g.fillStyle=col;g.fillText(t,128,48,240);
+ const m=new T.Mesh(new T.PlaneGeometry(16,4),bas(0xffffff,Object.assign({map:new T.CanvasTexture(c)},add)));m.position.set(Math.sin(a)*13.8,y,Math.cos(a)*13.8);m.rotation.y=a;scene.add(m);glow(C(col),22,Math.sin(a)*15,y,Math.cos(a)*15)}
+document.fonts.load('700 44px "Chakra Petch"').finally(()=>{[['MODO GAMING','#b58cff'],['TELEMETRÍA','#8936ff'],['COMUNIDAD','#efe6ff'],['STRATOS','#8936ff']].forEach((q,i)=>{sign(q[0],q[1],i*1.57,18);sign('STRATOS',q[1],i*1.57,212)})});
+// ---------- Suelo mojado + charcos ----------
+const rc=cvs(512,512),g=rc.getContext('2d');g.fillStyle='#221d26';g.fillRect(0,0,512,512);g.fillStyle='#100d13';g.fillRect(178,0,156,512);g.fillRect(0,178,512,156);
+g.fillStyle='#53495b';[176,334].forEach(v=>{g.fillRect(v,0,2,512);g.fillRect(0,v,512,2)});g.fillStyle='#100d13';g.fillRect(178,178,156,156);
+g.fillStyle='#b58cff';for(let k=0;k<512;k+=64)if(k<170||k>330){g.fillRect(254,k,4,30);g.fillRect(k,254,30,4)}
+g.fillStyle='#8936ff';for(let k=0;k<512;k+=64)if(k<170||k>330)[217,295].forEach(v=>{g.fillRect(v-1,k,2,22);g.fillRect(k,v-1,22,2)});
+const gt=tex(rc,1),rep=1200/46;gt.repeat.set(rep,rep);gt.offset.set(-.0435,-.0435);
+const gm=new T.Mesh(new T.PlaneGeometry(1200,1200),new T.MeshStandardMaterial({map:gt,roughness:.22,metalness:.3,envMapIntensity:1.8}));gm.rotation.x=-Math.PI/2;gm.receiveShadow=true;scene.add(gm);
+const pb=cvs(128,128),pg=pb.getContext('2d'),pr=pg.createRadialGradient(64,64,12,64,64,62);pr.addColorStop(0,'#fff');pr.addColorStop(.65,'#fff');pr.addColorStop(1,'#000');pg.fillStyle='#000';pg.fillRect(0,0,128,128);pg.fillStyle=pr;pg.fillRect(0,0,128,128);
+const pud=new T.MeshStandardMaterial({color:0x09070a,roughness:.02,metalness:1,envMapIntensity:3,alphaMap:new T.CanvasTexture(pb),transparent:true,depthWrite:false}),pgeo=new T.PlaneGeometry(1,1);
+for(let i=0;i<110;i++){const ax=i%2,c=23+46*((rnd()*10-5)|0)+(rnd()-.5)*9,s=rnd()*440-220,m=new T.Mesh(pgeo,pud),w=4+rnd()*9;m.scale.set(w,w*(.4+rnd()*.5),1);m.rotation.set(-Math.PI/2,0,rnd()*6.28);m.position.set(ax?s:c,.06,ax?c:s);scene.add(m)}
+// ---------- Faroles ----------
+const lp=[];for(let k=-7;k<=6;k++)for(let m=0;m<27;m++){const s=-299+23*m,o=(m%2?8.2:-8.2),c=23+46*k;if(s>=-232)lp.push([c+o,s]);if(c+o>=-232)lp.push([s,c+o])}
+const poles=new T.InstancedMesh(new T.CylinderGeometry(.14,.2,9,6),new T.MeshStandardMaterial({color:0x765d99,metalness:.7,roughness:.4}),lp.length),mt=new T.Matrix4(),lpos=new Float32Array(lp.length*3);
+lp.forEach(([x,z],i)=>{mt.setPosition(x,4.5,z);poles.setMatrixAt(i,mt);lpos.set([x,9.3,z],i*3)});scene.add(poles);
+const lg=new T.BufferGeometry();lg.setAttribute('position',new T.BufferAttribute(lpos,3));const lamps=new T.Points(lg,new T.PointsMaterial(Object.assign({size:18,map:GT,color:A,opacity:.9},add)));lamps.frustumCulled=false;scene.add(lamps);
+// ---------- Carros: silueta de sedán (capó, parabrisas, techo, cajuela), cristales, ruedas y faros ----------
+const g5=new T.PlaneGeometry(3.4,11),g6=new T.PlaneGeometry(3,6),g7=new T.BoxGeometry(1.3,.1,.08),g8=new T.CylinderGeometry(.38,.38,2,16);g8.rotateZ(Math.PI/2);
+const kc=cvs(64,256),kg=kc.getContext('2d'),kr=kg.createLinearGradient(0,0,0,256);kr.addColorStop(0,'rgba(255,255,255,.9)');kr.addColorStop(1,'rgba(255,255,255,0)');kg.fillStyle=kr;kg.fillRect(0,0,64,256);kg.globalCompositeOperation='destination-in';const kh=kg.createLinearGradient(0,0,64,0);[[0,0],[.5,1],[1,0]].forEach(([q,w])=>kh.addColorStop(q,`rgba(0,0,0,${w})`));kg.fillStyle=kh;kg.fillRect(0,0,64,256);
+const dk=new T.MeshStandardMaterial({color:0x090809,roughness:.7}),gl=new T.MeshStandardMaterial({color:0x130f17,metalness:1,roughness:.04,envMapIntensity:2.5}),hb=bas(F),tb=bas(0x8654cc),
+cone=bas(F,Object.assign({map:new T.CanvasTexture(kc),opacity:.55},add)),ug=[A,B].map(c=>bas(c,Object.assign({map:GT,opacity:.8},add))),
+bm=[0x5b5366,0x8936ff,0xefe6ff,0x765d99].map(c=>new T.MeshPhysicalMaterial({color:c,metalness:.75,roughness:.22,clearcoat:1,clearcoatRoughness:.06,envMapIntensity:2}));
+const sh=new T.Shape();sh.moveTo(-2.15,.35);sh.lineTo(2.1,.35);sh.quadraticCurveTo(2.3,.35,2.3,.6);sh.lineTo(2.2,.85);sh.quadraticCurveTo(1.2,.95,.7,1);sh.quadraticCurveTo(.3,1.45,-.2,1.45);sh.quadraticCurveTo(-1.1,1.45,-1.55,1);sh.quadraticCurveTo(-2.2,.95,-2.25,.8);sh.lineTo(-2.25,.5);sh.quadraticCurveTo(-2.25,.35,-2.15,.35);
+const gs=new T.Shape();gs.moveTo(.62,1);gs.lineTo(.26,1.38);gs.lineTo(-1,1.4);gs.lineTo(-1.45,1);gs.closePath();
+const ex=(sp,d,bv)=>{const g=new T.ExtrudeGeometry(sp,{depth:d,bevelEnabled:!!bv,bevelSize:.07,bevelThickness:.08,bevelSegments:2,curveSegments:8});g.rotateY(-Math.PI/2);g.translate(d/2,0,0);return g},gB=ex(sh,1.7,1),gG=ex(gs,1.9,0);
+// Carriles: 4 por calle (2 por sentido), centrados dentro del asfalto (la acera empieza a 7 m del centro). Cada carril lleva su propia velocidad, así no se montan.
+const cars=[];
+[-1,0,1].forEach(k=>[0,1].forEach(ax=>[-5.25,-1.75,1.75,5.25].forEach(off=>{const v=(9+rnd()*8)*(off<0?1:-1),s0=rnd()*470-235;
+ [0,235].forEach(d=>{const i=cars.length,o=new T.Group(),mm=(g,m,x,y,z,cs)=>{const e=new T.Mesh(g,m);e.position.set(x,y,z);e.castShadow=!!cs;o.add(e);return e};
+  mm(gB,bm[i%4],0,0,0,1);mm(gG,gl,0,0,0);mm(g8,dk,0,.38,1.4,1);mm(g8,dk,0,.38,-1.4,1);mm(g7,hb,0,.62,2.3);mm(g7,tb,0,.7,-2.27);
+  mm(g5,cone,0,.12,7.8).rotation.x=-Math.PI/2;mm(g6,ug[i%2],0,.08,0).rotation.x=-Math.PI/2;
+  glow(F,7,0,.65,2.5,o);glow(0x8654cc,5,0,.7,-2.4,o);scene.add(o);cars.push({o,ax,c:23+46*k+off,s:s0+d,v})})})));
+// ---------- Vehículos voladores y naves ----------
+const fly=Array.from({length:18},(_,i)=>({s:glow(i%2?A:B,3,0,0,0),r:40+rnd()*150,y:10+rnd()*235,v:(.08+rnd()*.25)*(i%3?1:-1),p:rnd()*7}));
+const ships=Array.from({length:10},(_,i)=>{const col=C([A,B,F][i%3]),body=new T.Mesh(new T.BoxGeometry(1.6,.7,4),bas(F,{fog:false}));scene.add(body);const s=glow(col,9,0,0,0);s.material.fog=false;return{body,s,r:110+rnd()*170,y:25+rnd()*230,v:(.2+rnd()*.25)*(i%2?1:-1),p:rnd()*7,w:rnd()*3}});
+// ---------- Nubes realistas (capas de sprites con ruido suave) ----------
+const CT=[0,1,2].map(()=>{const c=cvs(256,256),g=c.getContext('2d');for(let i=0;i<50;i++){const x=40+rnd()*176,y=70+rnd()*110,r=26+rnd()*54,gr=g.createRadialGradient(x,y,0,x,y,r);gr.addColorStop(0,`rgba(178,164,191,${.1+rnd()*.15})`);gr.addColorStop(1,'rgba(178,164,191,0)');g.fillStyle=gr;g.fillRect(0,0,256,256)}return new T.CanvasTexture(c)});
+const clouds=Array.from({length:70},(_,i)=>{const s=new T.Sprite(new T.SpriteMaterial({map:CT[i%3],transparent:true,depthWrite:false,fog:false,opacity:.5+rnd()*.3,color:0xbea8d1})),r=80+rnd()*650,a=rnd()*6.28,z=220+rnd()*260;s.position.set(Math.cos(a)*r,300+rnd()*130,Math.sin(a)*r);s.scale.set(z*1.6,z*.7,1);scene.add(s);return{s,v:2+rnd()*4}});
+// ---------- Lluvia ----------
+const N=3500,rp=new Float32Array(N*6),rd=[];for(let i=0;i<N;i++)rd.push([(rnd()-.5)*130,rnd()*120,(rnd()-.5)*130,70+rnd()*40]);
+const rg=new T.BufferGeometry();rg.setAttribute('position',new T.BufferAttribute(rp,3));const rain=new T.LineSegments(rg,new T.LineBasicMaterial({color:0xddd4e9,transparent:true,opacity:.32}));rain.frustumCulled=false;scene.add(rain);
+// ---------- Puerta de entrada en la base de la torre (cara +x) ----------
+const dg=new T.Mesh(new T.PlaneGeometry(5,7.2),bas(A,Object.assign({opacity:.7},add)));dg.position.set(13.15,5.7,0);dg.rotation.y=Math.PI/2;scene.add(dg);
+[-2.75,2.75].forEach(z=>{const m=new T.Mesh(new T.BoxGeometry(.5,7.6,.5),bas(B));m.position.set(13.25,5.7,z);scene.add(m)});
+const doorLt=new T.Mesh(new T.BoxGeometry(.5,.5,6),bas(B));doorLt.position.set(13.25,9.5,0);scene.add(doorLt);glow(A,18,14,5.7,0);
+document.fonts.load('700 44px "Chakra Petch"').finally(()=>sign('OBJETIVOS','#efe6ff',Math.PI/2,11));
+// ---------- NOSOTROS: sala interior con cubo giratorio (misma página, lejos de la ciudad) ----------
+const RX=5000,rG=new T.Group();rG.position.x=RX;scene.add(rG);
+const rW=new T.Mesh(new T.BoxGeometry(90,40,90),new T.MeshStandardMaterial({color:0x151118,roughness:.45,metalness:.7,side:T.BackSide,envMapIntensity:1.2}));rW.position.y=20;rG.add(rW);
+const rF=new T.Mesh(new T.PlaneGeometry(90,90),new T.MeshStandardMaterial({color:0x100d13,roughness:.1,metalness:.9,envMapIntensity:2.5}));rF.rotation.x=-Math.PI/2;rG.add(rF);
+const rGrid=new T.GridHelper(90,30,A,0x765d99);rGrid.material.transparent=true;rGrid.material.opacity=.35;rGrid.position.y=.03;rG.add(rGrid);
+[-30,-10,10,30].forEach((x,i)=>[[x,-44],[x,44],[-44,x],[44,x]].forEach(([px,pz],j)=>{const m=new T.Mesh(new T.BoxGeometry(.5,38,.5),bas((i+j)%2?A:B));m.position.set(px,19,pz);rG.add(m)}));
+[[24,36,A],[14,37.5,B]].forEach(([r,y,c])=>{const m=new T.Mesh(new T.TorusGeometry(r,.4,8,64),bas(c));m.rotation.x=Math.PI/2;m.position.y=y;rG.add(m)});
+const rl1=new T.PointLight(A,3,70,2);rl1.position.set(0,16,8);rG.add(rl1);const rl2=new T.PointLight(B,2.5,60,2);rl2.position.set(-14,5,-6);rG.add(rl2);
+const plat=new T.Mesh(new T.CylinderGeometry(7,8,.8,48),new T.MeshStandardMaterial({color:0x2d2833,metalness:.9,roughness:.2,envMapIntensity:2}));plat.position.y=.4;rG.add(plat);
+[[8.6,A],[11.5,B]].forEach(([r,c])=>{const m=new T.Mesh(new T.TorusGeometry(r,.12,8,64),bas(c));m.rotation.x=Math.PI/2;m.position.y=.2;rG.add(m)});
+const rh=new T.Group();
+const NAMES=['OBJETIVO GENERAL','OBJETIVOS ESPECÍFICOS','CONCLUSIONES','EQUIPO'],TXT=['Desarrollar Stratos como plataforma móvil integral que centralice la gestión de aplicaciones, optimice el rendimiento en tiempo real y fomente la interacción entre usuarios.','Diseñar la arquitectura modular, implementar la telemetría en tiempo real, desarrollar la interfaz y el centro comunitario, y evaluar frente a las tiendas tradicionales.','Stratos convierte las tiendas tradicionales en una utilidad secundaria y da mayor control sobre el hardware y los hábitos digitales.','INFOSOFT: Samuel Andrés Valencia, Santiago Serrano y Daniel Santiago Salamanca, de la Universidad de Cundinamarca.'];
+const faces=NAMES.map(()=>{const c=cvs(1024,1024);return{c,tx:tex(c,1)}});
+function wrap(g,t,x,y,w,lh){let l='';for(const w2 of t.split(' ')){const n=l?l+' '+w2:w2;if(g.measureText(n).width>w&&l){g.fillText(l,x,y);y+=lh;l=w2}else l=n}g.fillText(l,x,y);return y+lh}
+function drawFaces(){faces.forEach((f,i)=>{const g=f.c.getContext('2d'),gr2=g.createLinearGradient(0,0,0,1024);gr2.addColorStop(0,'#19141d');gr2.addColorStop(1,'#0c0a0e');g.fillStyle=gr2;g.fillRect(0,0,1024,1024);
+ g.strokeStyle='#8936ff';g.lineWidth=6;g.shadowColor='#8936ff';g.shadowBlur=24;g.strokeRect(28,28,968,968);g.fillStyle='#8936ff';g.font='700 40px "Chakra Petch",sans-serif';g.fillText('0'+(i+1)+' / 04',70,110);
+ g.shadowColor='#b58cff';g.shadowBlur=10;g.fillStyle='#ffffff';g.font='700 96px "Chakra Petch",sans-serif';let y=wrap(g,NAMES[i],70,270,880,104);
+ g.shadowBlur=0;g.fillStyle='#8936ff';g.fillRect(70,y-40,160,6);g.fillStyle='#f4eeff';g.font='700 50px "Chakra Petch",sans-serif';wrap(g,TXT[i],70,y+50,880,70);f.tx.needsUpdate=true})}
+drawFaces();Promise.all([document.fonts.load('700 40px "Chakra Petch"'),document.fonts.load('500 40px "Chakra Petch"')]).finally(drawFaces);
+const cubeG=new T.BoxGeometry(11,11,11),fmat=i=>new T.MeshStandardMaterial({map:faces[i].tx,emissive:0xffffff,emissiveMap:faces[i].tx,emissiveIntensity:.4,metalness:0,roughness:1,envMapIntensity:0}),cubeM=new T.MeshStandardMaterial({color:0x2d2833,emissive:B,emissiveIntensity:.35,metalness:.8,roughness:.2});
+const cube=new T.Mesh(cubeG,[fmat(1),fmat(3),cubeM,cubeM,fmat(0),fmat(2)]);cube.position.y=8;rG.add(cube);cube.add(new T.LineSegments(new T.EdgesGeometry(cubeG),new T.LineBasicMaterial({color:A,transparent:true,opacity:.45})));
+const rg2=glow(B,26,RX,1,0);rg2.material.opacity=.4;
+// Modos: city (recorrido), enter (entrando a la puerta), room (cubo), exit (volviendo a la calle)
+let mode='city',tr=0,ps0=0,cityScroll=0,rmP=0,PD=.458,lastFace=-1,fa=0;
+const DE=new T.Vector3(15,5.7,0),DC=new T.Vector3(13,5.7,0),A2=new T.Vector3(),B2=new T.Vector3(),fsh=document.getElementById('fsh'),hudT=document.getElementById('ht'),hudN=document.getElementById('hn'),navA=[...document.querySelectorAll('.nav nav a[data-page]')];
+function setNav(r){const nm=r===1?'nosotros':r===2?'servicios':r===3?'contacto':r===4?'portafolio':r===5?'proceso':r===6?'alianzas':'inicio';navA.forEach(a=>{const on=a.dataset.page===nm;a.classList.toggle('on',on);on?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')})}
+function goRoom(){if(mode==='serv'||mode==='cont'||mode==='port'||mode==='proc'||mode==='ally'){pend='room';goCity();return}if(mode!=='city')return;setHud('room');mode='enter';tr=0;ps0=ps;cityScroll=scrollY;document.body.classList.add('inroom');setNav(1)}
+function goCity(){if(mode==='room'){mode='exit';tr=0;document.body.classList.remove('rm')}else if(mode==='serv'){mode='sx';tr=0;document.body.classList.remove('rm')}else if(mode==='cont'){mode='cx';tr=0;document.body.classList.remove('rm','ct')}else if(mode==='port'){mode='px';tr=0;document.body.classList.remove('rm')}else if(mode==='proc'){mode='prx';tr=0;document.body.classList.remove('rm')}else if(mode==='ally'){mode='ax';tr=0;document.body.classList.remove('rm','al2')}}
+function roomUpd(t,dt){const qq=Math.min(rmP,.9999)*3,fi=Math.floor(qq),ri=fi+sm(.3,.7,qq-fi);cube.rotation.y=-ri*Math.PI/2+Math.sin(t*.6)*.03;cube.position.y=8+Math.sin(t*.9)*.25;rh.rotation.y+=dt*.3*k;dg.material.opacity=.55+.3*Math.sin(t*3);
+ const f2=Math.round(ri);if(f2!==lastFace){lastFace=f2;hudT.textContent=NAMES[f2];hudN.textContent='0'+(f2+1)+' / 04'}}
+// ---------- SERVICIOS: torre con una pantalla de la punta a la base; la cámara baja leyendo ----------
+let svP=0,svc=null,pend=null,lastSv=-1,svYc=56;const LK=new T.Vector3(),LK0=new T.Vector3(),svL=new T.Vector3(),SVC=cvs(1024,4096),svTx=tex(SVC,1),secY=[0,0,0],SVN=['MODO GAMING','GESTIÓN DE APPS','COMUNIDAD'];
+bld(23,-264,28,112,Mt);
+[[1,1,A],[-1,1,B],[1,-1,B],[-1,-1,A]].forEach(([a,b,c])=>{const m=new T.Mesh(new T.BoxGeometry(.6,112,.6),bas(c));m.position.set(23+14*a,56,-264+14*b);scene.add(m)});
+[1,112].forEach((y,i)=>{const g2=new T.BoxGeometry(32,2,32),m=new T.Mesh(g2,dark);m.position.set(23,y,-264);scene.add(m);const e=new T.LineSegments(new T.EdgesGeometry(g2),new T.LineBasicMaterial({color:i?B:A}));e.position.copy(m.position);scene.add(e)});
+const svBack=new T.Mesh(new T.PlaneGeometry(24.8,96.8),bas(0x0b080d));svBack.position.set(23,56,-249.9);scene.add(svBack);
+const svScr=new T.Mesh(new T.PlaneGeometry(24,96),new T.MeshBasicMaterial({map:svTx,color:0xd3d0d7}));svScr.position.set(23,56,-249.85);scene.add(svScr);
+const svFr=new T.LineSegments(new T.EdgesGeometry(new T.PlaneGeometry(24.8,96.8)),new T.LineBasicMaterial({color:B}));svFr.position.set(23,56,-249.8);scene.add(svFr);
+const SV=[['MODO GAMING',[['Descripción','Telemetría en tiempo real de batería, CPU, GPU y horas de juego.'],['Perfiles','Perfiles de optimización de rendimiento según el juego y el equipo.'],['Requisitos','Comprobador para saber si una app corre bien en tu móvil.']]],['GESTIÓN DE APPS',[['Biblioteca','Centraliza tus aplicaciones y su compatibilidad.'],['Historial','Registro de compras y de hábitos de uso.'],['Control','Seguimiento del tiempo de uso y del consumo de batería.'],['Personalización','Una interfaz pensada para ti, no para la tienda.']]],['COMUNIDAD',[['','Reseñas, guías, parches y mods creados por los usuarios, con foros para colaborar.']]]];
+function icon(g,k,x,y){g.strokeStyle='#8936ff';g.lineWidth=4;g.strokeRect(x,y,130,130);g.fillStyle='#b58cff';g.strokeStyle='#b58cff';
+ if(k===0){g.beginPath();g.moveTo(x+50,y+36);g.lineTo(x+50,y+94);g.lineTo(x+100,y+65);g.fill()}
+ else if(k===1){g.beginPath();g.arc(x+65,y+65,30,0,6.283);g.stroke();g.beginPath();g.arc(x+65,y+65,12,0,6.283);g.fill()}
+ else[0,1,2].forEach(i=>{g.fillRect(x+30+i*28,y+26,6,78);g.fillRect(x+22+i*28,y+40+i*18,22,12)})}
+function drawSv(){const g=SVC.getContext('2d');g.shadowBlur=0;g.fillStyle='#100d12';g.fillRect(0,0,1024,4096);g.strokeStyle='#8936ff';g.lineWidth=5;g.strokeRect(20,20,984,4056);
+ g.fillStyle='#b58cff';g.font='700 140px "Chakra Petch",sans-serif';g.fillText('MÓDULOS',70,230);g.fillStyle='#8936ff';g.fillRect(70,270,220,8);
+ let y=560;SV.forEach((sc,i)=>{secY[i]=y-90;g.fillStyle='#b58cff';g.font='700 78px "Chakra Petch",sans-serif';y=wrap(g,sc[0],70,y,880,88)+10;
+  sc[1].forEach(it=>{const ic={Biblioteca:0,Historial:1,Control:2}[it[0]],has=ic!==undefined,tx=has?240:70;
+   if(it[0]){g.fillStyle='#c9a8ff';g.font='700 48px "Chakra Petch",sans-serif';g.fillText(it[0],tx,y+10)}
+   if(has)icon(g,ic,70,y-30);
+   g.fillStyle='#f7f2ff';g.font='500 52px "Chakra Petch",sans-serif';const y2=wrap(g,it[1],tx,y+(it[0]?70:10),has?720:880,70);y=Math.max(y2,has?y+130:0)+50});
+  y+=110});svTx.needsUpdate=true}
+drawSv();Promise.all([document.fonts.load('700 40px "Chakra Petch"'),document.fonts.load('500 40px "Chakra Petch"')]).finally(drawSv);
+// Cámara frente a la pantalla: se aleja lo necesario para que quepa el ancho (celular incluido) y baja con el scroll
+function svPos(p,pos,look){const d=Math.max(17,24/(1.1547*cam.aspect)*1.05),vh=1.1547*d,yt=104-vh/2+1,yb=8+vh/2-1,y=vh<98?yt+(yb-yt)*p:56;svYc=y;pos.set(23+Math.sin(p*3)*1.5,y,-250+d);look.set(23,y,-250)}
+function setHud(k){document.getElementById('hl').textContent=k==='serv'?'MÓDULOS':k==='cont'?'CONTACTO':k==='port'?'RESULTADOS':k==='proc'?'METODOLOGÍA':k==='ally'?'COMUNIDAD':'OBJETIVOS';document.getElementById('hp').textContent=k==='serv'?'Baja para recorrer la pantalla':k==='cont'?'Baja para subir por el edificio':k==='port'?'Baja para desplazar la pantalla':k==='proc'?'Baja para entrar al espacio':k==='ally'?'Baja para girar 360° por la ciudad subterránea':'Baja para girar el cubo'}
+function goServ(){if(mode==='room'||mode==='cont'||mode==='port'||mode==='proc'||mode==='ally'){pend='serv';goCity();return}if(mode!=='city')return;
+ mode='senter';tr=0;cityScroll=scrollY;lastSv=-1;document.body.classList.add('inroom');setNav(2);setHud('serv');
+ const F=new T.Vector3();svPos(0,F,svL);LK0.copy(LK);svc=new T.CatmullRomCurve3([cam.position.clone(),new T.Vector3(23,190,-40),new T.Vector3(23,190,-200),F])}
+function svUpd(){if(mode!=='serv')return;const cy=(104-svYc)/96*4096,ix=cy>=secY[2]-350?2:cy>=secY[1]-350?1:0;if(ix!==lastSv){lastSv=ix;hudT.textContent=SVN[ix];hudN.textContent='0'+(ix+1)+' / 03'}}
+// ---------- CONTACTO: torre con 4 ventanas; la cámara sube girando de ventana en ventana hasta la azotea ----------
+const ctX=-70,ctZ=-292,ctH=110,ctR=ctH+1,ctY=[16,42,68,94],ctCol=[A,B,F,A],ctHex=['#b58cff','#8936ff','#efe6ff','#b58cff'],ctN=['CONOCE EL PROYECTO','ESCRÍBENOS','AUTORES','CANALES DIRECTOS','REFERENCIAS'],ctL=new T.Vector3(),MAPSRC='about:blank';
+let cP=0,ctc=null,lastCt=-1;
+bld(ctX,ctZ,26,ctH,M[1]);
+[[1,1,A],[-1,1,B],[1,-1,B],[-1,-1,A]].forEach(([a,b,c])=>{const m=new T.Mesh(new T.BoxGeometry(.6,ctH,.6),bas(c));m.position.set(ctX+13.3*a,ctH/2,ctZ+13.3*b);scene.add(m)});
+[1,ctH].forEach((y,i)=>{const g2=new T.BoxGeometry(32,2,32),m=new T.Mesh(g2,dark);m.position.set(ctX,y,ctZ);scene.add(m);const e=new T.LineSegments(new T.EdgesGeometry(g2),new T.LineBasicMaterial({color:i?B:A}));e.position.copy(m.position);scene.add(e)});
+[29,55,81].forEach(y=>{const m=new T.Mesh(new T.BoxGeometry(28,.5,28),bas(B));m.position.set(ctX,y,ctZ);scene.add(m)});
+// Ventanas: una por cara, a medida que se sube
+const ctWc=ctY.map(()=>{const c=cvs(512,432);return{c,tx:tex(c,1)}}),ctWT=['PROYECTO','ESCRÍBENOS','AUTORES','CANALES'],ctWS=['INFOSOFT','AL EQUIPO','DEL PROYECTO','DIRECTOS'];
+function drawCtW(){ctWc.forEach((f,j)=>{const g4=f.c.getContext('2d'),gr=g4.createLinearGradient(0,0,0,432);gr.addColorStop(0,'#221c28');gr.addColorStop(1,'#0c0a0e');g4.fillStyle=gr;g4.fillRect(0,0,512,432);
+ g4.strokeStyle=ctHex[j];g4.lineWidth=6;g4.strokeRect(10,10,492,412);g4.lineWidth=2;g4.strokeRect(24,24,464,384);g4.fillStyle=ctHex[j];g4.textAlign='center';
+ g4.font='700 40px "Chakra Petch",sans-serif';g4.fillText('0'+(j+1)+' / 04',256,96);g4.font='700 78px "Chakra Petch",sans-serif';g4.shadowColor=ctHex[j];g4.shadowBlur=18;g4.fillText(ctWT[j],256,214,440);
+ g4.shadowBlur=0;g4.fillRect(196,244,120,5);g4.font='500 46px "Chakra Petch",sans-serif';g4.fillText(ctWS[j],256,320,440);f.tx.needsUpdate=true})}
+drawCtW();Promise.all([document.fonts.load('700 40px "Chakra Petch"'),document.fonts.load('500 40px "Chakra Petch"')]).finally(drawCtW);
+ctY.forEach((y,j)=>{const a=j*Math.PI/2,sx=Math.sin(a),cz=Math.cos(a),m=new T.Mesh(new T.PlaneGeometry(20,17),new T.MeshBasicMaterial({map:ctWc[j].tx,color:0xe0dae6}));
+ m.position.set(ctX+sx*13.12,y,ctZ+cz*13.12);m.rotation.y=a;scene.add(m);
+ const e=new T.LineSegments(new T.EdgesGeometry(new T.PlaneGeometry(20.8,17.8)),new T.LineBasicMaterial({color:ctCol[j]}));e.position.set(ctX+sx*13.16,y,ctZ+cz*13.16);e.rotation.y=a;scene.add(e);
+ glow(ctCol[j],30,ctX+sx*15,y,ctZ+cz*15)});
+// Azotea: borde bajo, antena y luz frontal
+[[0,15.5,32,1],[0,-15.5,32,1],[15.5,0,1,30],[-15.5,0,1,30]].forEach(([x,z,w,d])=>{const m=new T.Mesh(new T.BoxGeometry(w,1.2,d),dark);m.position.set(ctX+x,ctR+.6,ctZ+z);scene.add(m);const n=new T.Mesh(new T.BoxGeometry(w,.18,d),bas(B));n.position.set(ctX+x,ctR+1.25,ctZ+z);scene.add(n)});
+const ctAn=new T.Mesh(new T.CylinderGeometry(.2,.4,16,6),bas(0x765d99));ctAn.position.set(ctX-9,ctR+8,ctZ-9);scene.add(ctAn);const ctBc=glow(F,9,ctX-9,ctR+16.5,ctZ-9);
+const ctLt=new T.PointLight(A,2.4,90,2);ctLt.position.set(ctX,ctR+12,ctZ+24);scene.add(ctLt);
+// Personas en la punta del edificio (miran hacia la ciudad): una de pie con el cartel, otra sentada en el borde
+const mkM=(c,r,e)=>new T.MeshStandardMaterial({color:c,roughness:r,metalness:.15,envMapIntensity:.9,emissive:e||0,emissiveIntensity:.5}),pSk=mkM(0x9b96c3,.75),pHr=mkM(0x0f0e10,.8),pJa=mkM(0x765d99,.5,0x1f1925),pJb=mkM(0x5b5366,.5,0x19141d),pPa=mkM(0x17131b,.6),pSh=mkM(0xefe6ff,.4,0x434048);
+const bx=(p,m,w,h,d,x,y,z)=>{const e=new T.Mesh(new T.BoxGeometry(w,h,d),m);e.position.set(x,y,z);e.castShadow=true;p.add(e);return e},hd=(p,y)=>{const h=new T.Group();h.position.set(0,y,0);p.add(h);const s=new T.Mesh(new T.SphereGeometry(.42,16,12),pSk),r=new T.Mesh(new T.SphereGeometry(.45,16,12),pHr);r.position.set(0,.07,-.1);h.add(s,r);bx(h,pHr,.1,.1,.05,-.15,.04,.4);bx(h,pHr,.1,.1,.05,.15,.04,.4);return h};
+// De pie, con una mano alzada sosteniendo el cartel
+const ctS=new T.Group();ctS.position.set(ctX+4,ctR,ctZ+6);scene.add(ctS);
+bx(ctS,pPa,.5,1.5,.5,-.3,.75,0);bx(ctS,pPa,.5,1.5,.5,.3,.75,0);bx(ctS,pSh,.55,.25,.85,-.3,.12,.15);bx(ctS,pSh,.55,.25,.85,.3,.12,.15);bx(ctS,pJa,1.4,1.5,.75,0,2.25,0);bx(ctS,pJb,1.42,.18,.77,0,1.6,0);
+const sHd=hd(ctS,3.35),sL=new T.Group(),sR=new T.Group();sL.position.set(-.9,2.85,0);sL.rotation.z=.12;ctS.add(sL);bx(sL,pJa,.38,1.2,.38,0,-.6,0);bx(sL,pSk,.34,.34,.34,0,-1.3,0);
+sR.position.set(.9,2.85,0);sR.rotation.z=Math.PI-.12;ctS.add(sR);bx(sR,pJa,.38,1.3,.38,0,-.65,0);bx(sR,pSk,.36,.36,.36,0,-1.45,0);
+const BC=cvs(768,336),BT=tex(BC,1),sg=new T.Group();sg.position.set(1.08,4.34,.05);sg.rotation.z=-.12;ctS.add(sg);
+function drawCtB(){const g6b=BC.getContext('2d');g6b.fillStyle='#100d12';g6b.fillRect(0,0,768,336);g6b.strokeStyle='#8936ff';g6b.lineWidth=12;g6b.strokeRect(10,10,748,316);g6b.lineWidth=4;g6b.strokeRect(30,30,708,276);
+ g6b.textAlign='center';g6b.fillStyle='#b58cff';g6b.shadowColor='#b58cff';g6b.shadowBlur=26;g6b.font='700 170px "Chakra Petch",sans-serif';g6b.fillText('STRATOS',384,225,660);BT.needsUpdate=true}
+drawCtB();document.fonts.load('700 170px "Chakra Petch"').finally(drawCtB);
+const sPole=new T.Mesh(new T.CylinderGeometry(.08,.08,5.5,8),mkM(0x765d99,.4));sPole.position.set(0,1.65,0);sg.add(sPole);bx(sg,pPa,7.6,3.4,.12,0,3.0,0);
+[[.07,0],[-.07,Math.PI]].forEach(([z,r])=>{const m=new T.Mesh(new T.PlaneGeometry(7.4,3.2),new T.MeshBasicMaterial({map:BT,color:0xeeeaf2}));m.position.set(0,3.0,z);m.rotation.y=r;sg.add(m)});glow(B,16,0,3,.6,sg);
+// Sentada en el borde, con las piernas colgando
+const ctQ=new T.Group();ctQ.position.set(ctX-5,ctR+1.2,ctZ+15.5);scene.add(ctQ);
+bx(ctQ,pPa,1.2,.5,.8,0,.25,0);bx(ctQ,pJb,1.3,1.5,.7,0,1.25,-.05);bx(ctQ,pPa,.5,.5,1.5,-.3,.25,.85);bx(ctQ,pPa,.5,.5,1.5,.3,.25,.85);
+const qH=hd(ctQ,2.35),qL1=new T.Group(),qL2=new T.Group();[[qL1,-.3],[qL2,.3]].forEach(([l,x])=>{l.position.set(x,.25,1.5);ctQ.add(l);bx(l,pPa,.5,1.5,.5,0,-.7,0);bx(l,pSh,.55,.25,.85,0,-1.55,.15)});
+[-.85,.85].forEach(x=>{const a=new T.Group();a.position.set(x,1.85,-.05);a.rotation.x=-.9;ctQ.add(a);bx(a,pJb,.34,1.1,.34,0,-.55,0);bx(a,pSk,.3,.3,.3,0,-1.2,0)});
+// Cámara de contacto: orbita la torre; cada ventana mira a una cara distinta y al final llega a la azotea
+function ctPose(s,pos,lk){const i=Math.min(3,Math.floor(s)),e=sm(.3,.7,s-i),as=cam.aspect,mob=as<1.1,wr=13+Math.max(19,22/(1.1547*as)),rr=30+Math.max(0,1.1-as)*26,
+ st=j=>j<4?[j*Math.PI/2,wr,ctY[j]+.5,ctY[j]-(mob?3:0),13]:[2*Math.PI,rr,ctR+4.5,ctR+4.5-(mob?3:0),8],a0=st(i),a1=st(i+1),L=q=>a0[q]+(a1[q]-a0[q])*e,an=L(0),sh=mob?0:Math.min(7,as*3),nx=Math.sin(an),nz=Math.cos(an);
+ pos.set(ctX+nx*L(1)+nz*sh,L(2),ctZ+nz*L(1)-nx*sh);lk.set(ctX+nx*L(4)+nz*sh,L(3),ctZ+nz*L(4)-nx*sh)}
+const cps=[...document.querySelectorAll('#ctp .cs')],mapF=document.getElementById('mapf'),cf=document.getElementById('cf');
+function runPend(g){g==='serv'?goServ():g==='cont'?goCont():g==='port'?goPort():g==='proc'?goProc():g==='ally'?goAlly():goRoom()}
+function goCont(){if(mode==='room'||mode==='serv'||mode==='port'||mode==='proc'||mode==='ally'){pend='cont';goCity();return}if(mode!=='city')return;
+ mode='centr';tr=0;cityScroll=scrollY;lastCt=-1;document.body.classList.add('inroom');setNav(3);setHud('cont');
+ const F=new T.Vector3();ctPose(0,F,ctL);LK0.copy(LK);ctc=new T.CatmullRomCurve3([cam.position.clone(),new T.Vector3(ctX+50,190,-40),new T.Vector3(ctX,190,-200),F])}
+function ctUpd(t){if(mode==='cont'){const ix=Math.min(4,Math.round(Math.min(1,cP)*4));if(ix!==lastCt){lastCt=ix;hudT.textContent=ctN[ix];hudN.textContent='0'+(ix+1)+' / 05';cps.forEach((e,i)=>e.classList.toggle('on',i===ix));if(ix>=1&&!mapF.getAttribute('src'))mapF.setAttribute('src',MAPSRC)}}
+ sg.rotation.z=-.12+Math.sin(t*1.4)*.05*k;sg.rotation.y=Math.sin(t*.9)*.1*k;sHd.rotation.y=Math.sin(t*.5)*.35*k;qL1.rotation.x=.15+Math.sin(t*1.6)*.22*k;qL2.rotation.x=.15+Math.sin(t*1.6+1.3)*.22*k;qH.rotation.y=.55+Math.sin(t*.4)*.12*k;ctBc.material.opacity=.4+.6*Math.abs(Math.sin(t*2))}
+const cfT=()=>{const d=new FormData(cf);return'Contacto - STRATOS\nNombre: '+d.get('n')+'\nInstitución: '+d.get('e')+'\nCorreo: '+d.get('c')+'\nTeléfono: '+d.get('t')+'\nMotivo: '+d.get('s')+'\nMensaje: '+d.get('m')+''};
+cf.addEventListener('submit',e=>{e.preventDefault();location.href='mailto:samuelvalencia@ucundinamarca.edu.co,santiagoserrano@ucundinamarca.edu.co,dssalamanca@ucundinamarca.edu.co?subject='+encodeURIComponent('Contacto Stratos - '+(new FormData(cf).get('e')||''))+'&body='+encodeURIComponent(cfT())});
+document.getElementById('cfw').addEventListener('click',e=>{if(!cf.reportValidity())return;const b=e.currentTarget;try{navigator.clipboard.writeText(cfT());b.textContent='¡Copiado!'}catch(_){b.textContent='Copia manual'}});
+// ---------- PORTAFOLIO: pantalla panorámica; la cámara se desplaza de un lado a otro frente a ella ----------
+const NP=6,PX=-220,PZ=-300,CW=30,CH=17,CP=32,PY=16,
+PN=['RESULTADOS','FILTROS POR MÓDULO','DIAGNÓSTICO Y TELEMETRÍA','PLATAFORMA MODULAR','CALIDAD Y SALIDAS','PIE DE PÁGINA'],
+PT=['Los resultados alcanzados por la investigación sobre Stratos: plataforma, telemetría y comunidad.','Explora los resultados por módulo de la arquitectura (Gaming, Casual y Comunidad) y por fase.','Monitoreo en tiempo real de CPU, GPU, batería y uso por sesión.','Arquitectura modular que reúne los espacios Gaming, Casual y Comunidad.','Matriz comparativa frente a Google Play Store; comprobador de requisitos, perfiles y foros.','STRATOS, plataforma móvil integral.'];
+let ptP=0,ptc=null,lastPt=-1;const ptL=new T.Vector3(),pcs=PN.map(()=>{const c=cvs(1440,816);return{c,tx:tex(c,1)}});
+function thumb(g,x,y,w,h,kind,s){const gr=g.createLinearGradient(x,y,x,y+h);gr.addColorStop(0,'#221b28');gr.addColorStop(1,'#0b080d');g.fillStyle=gr;g.fillRect(x,y,w,h);g.save();g.beginPath();g.rect(x,y,w,h);g.clip();const cl=['#b58cff','#8936ff','#efe6ff'];
+ if(kind===0){const bw=w*.34,bx=x+w*.33,b2=y+h*.18;g.fillStyle='#130f17';g.fillRect(bx,b2,bw,h*.82);for(let k=0;k<9;k++){g.globalAlpha=.8;g.fillStyle=cl[(k+s)%3];g.fillRect(bx,b2+k*h*.09+((s*7+k*13)%9),bw,h*.03)}g.globalAlpha=.7;g.strokeStyle='#8936ff';g.lineWidth=3;for(let k=0;k<3;k++){g.beginPath();g.arc(bx+bw/2,y+h*.6,30+k*28+s*6,0,6.28);g.stroke()}}
+ else if(kind===1){g.lineWidth=4;for(let k=0;k<6;k++){g.globalAlpha=.85-k*.1;g.strokeStyle=cl[(k+s)%3];g.beginPath();for(let q=0;q<=w;q+=8){const yy=y+h*.55+Math.sin(q/50+k*.7+s)*h*.18*(1-k*.08)+k*10;q?g.lineTo(x+q,yy):g.moveTo(x+q,yy)}g.stroke()}}
+ else{for(let r=0;r<3;r++)for(let q=0;q<9;q++){g.fillStyle=cl[(q+r+s)%3];g.globalAlpha=.25+((q*7+r*5+s*3)%10)/14;g.fillRect(x+20+q*(w-40)/9,y+30+r*54,(w-40)/9-8,34)}g.globalAlpha=.9;g.strokeStyle='#8936ff';g.lineWidth=3;g.strokeRect(x+w*.2,y+h*.62,w*.6,h*.28);g.beginPath();g.moveTo(x+w*.2,y+h*.62);g.lineTo(x+w*.5,y+h*.5);g.lineTo(x+w*.8,y+h*.62);g.stroke()}
+ g.restore();g.globalAlpha=1;g.strokeStyle='#8936ff';g.lineWidth=3;g.strokeRect(x,y,w,h);g.fillStyle='rgba(11,8,13,.55)';g.beginPath();g.arc(x+w-46,y+h-46,26,0,6.28);g.fill();g.fillStyle='#b58cff';g.beginPath();g.moveTo(x+w-54,y+h-60);g.lineTo(x+w-54,y+h-32);g.lineTo(x+w-34,y+h-46);g.fill()}
+function drawPort(){pcs.forEach((f,i)=>{const g=f.c.getContext('2d');g.shadowBlur=0;g.globalAlpha=1;const gr=g.createLinearGradient(0,0,0,816);gr.addColorStop(0,'#19141d');gr.addColorStop(1,'#0c0a0e');g.fillStyle=gr;g.fillRect(0,0,1440,816);
+ g.strokeStyle='#8936ff';g.lineWidth=6;g.shadowColor='#8936ff';g.shadowBlur=24;g.strokeRect(24,24,1392,768);g.shadowBlur=0;g.fillStyle='#8936ff';g.font='700 34px "Chakra Petch",sans-serif';g.fillText('0'+(i+1)+' / 06',80,98);
+ g.shadowColor='#b58cff';g.shadowBlur=10;g.fillStyle='#ffffff';g.font='700 72px "Chakra Petch",sans-serif';const ty=wrap(g,PN[i],80,190,1280,80);
+ g.shadowBlur=0;g.fillStyle='#8936ff';g.fillRect(80,ty-54,160,6);g.fillStyle='#f4eeff';g.font='500 38px "Chakra Petch",sans-serif';const by=wrap(g,PT[i],80,ty+10,1280,52);
+ if(i===0){g.fillStyle='#8936ff';g.font='700 30px "Chakra Petch",sans-serif';g.fillText('BAJA PARA DESPLAZAR LA PANTALLA  →',80,by+40);for(let k=0;k<NP;k++){g.globalAlpha=k?.35:1;g.fillStyle='#b58cff';g.fillRect(80+k*58,716,42,12)}g.globalAlpha=1}
+ else if(i===1){[['ENFOQUE',['Móvil ▾']],['ARQUITECTURA',['Gaming','Casual','Comunidad']],['FASE',['01-02','03-05','06-07']]].forEach((r,q)=>{const y=by+40+q*84;g.fillStyle='#8936ff';g.font='700 26px "Chakra Petch",sans-serif';g.fillText(r[0],80,y+38);let x=420;r[1].forEach((l,c)=>{g.font='700 30px "Chakra Petch",sans-serif';const w=g.measureText(l).width+56;g.fillStyle=c===0?'rgba(137,54,255,.22)':'rgba(45,40,51,.6)';g.fillRect(x,y,w,58);g.strokeStyle='#8936ff';g.lineWidth=3;g.strokeRect(x,y,w,58);g.fillStyle='#f4eeff';g.fillText(l,x+28,y+40);x+=w+18})})}
+ else if(i<5){const top=Math.max(by+10,440),h=Math.min(260,780-top);for(let k=0;k<3;k++)thumb(g,80+k*440,top,400,h,i-2,k)}
+ else{g.fillStyle='#f4eeff';g.font='500 38px "Chakra Petch",sans-serif';['Equipo INFOSOFT','Universidad de Cundinamarca','© 2026 STRATOS','Plataforma móvil integral'].forEach((l,q)=>g.fillText(l,80,by+50+q*62))}
+ f.tx.needsUpdate=true})}
+drawPort();Promise.all([document.fonts.load('700 40px "Chakra Petch"'),document.fonts.load('500 40px "Chakra Petch"')]).finally(drawPort);
+{const wT=(NP-1)*CP+CW+3,hh=PY-(CH+2.4)/2,slabG=new T.BoxGeometry(wT,CH+2.4,1.2),slab=new T.Mesh(slabG,bas(0x0b080d));slab.position.set(PX,PY,PZ-.65);scene.add(slab);
+ const sf=new T.LineSegments(new T.EdgesGeometry(slabG),new T.LineBasicMaterial({color:A}));sf.position.copy(slab.position);scene.add(sf);
+ [-1,-.5,0,.5,1].forEach(u=>{const lg2=new T.BoxGeometry(2,hh,2),m=new T.Mesh(lg2,dark);m.position.set(PX+u*wT*.47,hh/2,PZ-.65);scene.add(m);const e=new T.LineSegments(new T.EdgesGeometry(lg2),new T.LineBasicMaterial({color:B}));e.position.copy(m.position);scene.add(e)});
+ pcs.forEach((f,i)=>{const x=PX+(i-(NP-1)/2)*CP,m=new T.Mesh(new T.PlaneGeometry(CW,CH),new T.MeshBasicMaterial({map:f.tx,color:0xd3d0d7}));m.position.set(x,PY,PZ+.05);scene.add(m);
+  const e=new T.LineSegments(new T.EdgesGeometry(new T.PlaneGeometry(CW+.6,CH+.6)),new T.LineBasicMaterial({color:B}));e.position.set(x,PY,PZ+.1);scene.add(e);glow(i%2?A:B,46,x,PY,PZ+9)});
+ [[B,PZ+4],[A,PZ+5.2]].forEach(([c,z])=>{const s=new T.Mesh(new T.BoxGeometry(wT,.12,.4),bas(c));s.position.set(PX,.08,z);scene.add(s)})}
+function ptPos(p,pos,look){const q=Math.min(p,.9999)*(NP-1),fi=Math.floor(q),ri=fi+sm(.3,.7,q-fi),as=cam.aspect,d=Math.max(16.5,CW*1.04/(1.1547*as)),x=PX+(ri-(NP-1)/2)*CP;pos.set(x+Math.sin(p*5)*.6,PY+Math.sin(p*4)*.3,PZ+d);look.set(x,PY,PZ)}
+function goPort(){if(mode==='room'||mode==='serv'||mode==='cont'||mode==='proc'||mode==='ally'){pend='port';goCity();return}if(mode!=='city')return;
+ mode='penter';tr=0;cityScroll=scrollY;lastPt=-1;document.body.classList.add('inroom');setNav(4);setHud('port');
+ const F=new T.Vector3();ptPos(0,F,ptL);LK0.copy(LK);ptc=new T.CatmullRomCurve3([cam.position.clone(),new T.Vector3(PX+60,190,-40),new T.Vector3(PX,150,-200),F])}
+function ptUpd(){if(mode!=='port')return;const q=Math.min(ptP,.9999)*(NP-1),fi=Math.floor(q),ix=Math.round(fi+sm(.3,.7,q-fi));if(ix!==lastPt){lastPt=ix;hudT.textContent=PN[ix];hudN.textContent='0'+(ix+1)+' / 0'+NP}}
+// ---------- PROCESO: mirando al cielo -> espacio con estrellas y cometas -> descenso hasta el cenit sobre la ciudad ----------
+const PRN=['PROBLEMA Y ARQUITECTURA','DESARROLLO Y TELEMETRÍA','VISUALIZACIÓN E INTERFAZ','PRUEBAS Y EVALUACIÓN'],prWs=[...document.querySelectorAll('.pw')];
+let prP=0,prc=null,lastPr=-2;const prL=new T.Vector3(),
+c0t=skyU.top.value.clone(),c0m=skyU.mid.value.clone(),c0b=skyU.bot.value.clone(),c1t=C(0x020102),c1m=C(0x0a080b),c1b=C(0x110e14),
+kV1=new T.Vector3(),kV2=new T.Vector3(),kV3=new T.Vector3(),kV4=new T.Vector3(),kM=new T.Matrix4();
+// Estrellas: hemisferio superior (visible desde la calle) e inferior (solo en el espacio)
+function mkStars(n,up){const P=new Float32Array(n*3),Cc=new Float32Array(n*3),pal=[C(A),C(B),C(F),C(0xffffff)];
+ for(let i=0;i<n;i++){let x,y,z,l;do{x=rnd()*2-1;y=rnd()*2-1;z=rnd()*2-1;l=x*x+y*y+z*z}while(l>1||l<.01);l=Math.sqrt(l);x/=l;y=(up?Math.abs(y):-Math.abs(y))/l;if(up&&y<.02)y=.02+rnd()*.1;z/=l;
+  P.set([x*880,y*880,z*880],i*3);const c=pal[(rnd()*4)|0],b=.45+rnd()*.55;Cc.set([c.r*b,c.g*b,c.b*b],i*3)}
+ const g=new T.BufferGeometry();g.setAttribute('position',new T.BufferAttribute(P,3));g.setAttribute('color',new T.BufferAttribute(Cc,3));
+ const p=new T.Points(g,new T.PointsMaterial({size:3.4,map:GT,vertexColors:true,transparent:true,depthWrite:false,sizeAttenuation:false,fog:false,blending:T.AdditiveBlending}));p.frustumCulled=false;p.renderOrder=-1;p.visible=false;scene.add(p);return p}
+const starsU=mkStars(1900,true),starsL=mkStars(1700,false);
+// Nebulosas lejanas
+const nebG=new T.Group();nebG.visible=false;scene.add(nebG);
+[[A,.7,.3,-.65,900],[B,-.8,.15,-.5,1100],[B,.2,-.55,-.8,1000],[A,-.5,-.35,.8,900],[F,.1,.75,.65,800]].forEach(([c,x,y,z,s])=>{const l=Math.hypot(x,y,z),q=glow(c,s,x/l*800,y/l*800,z/l*800,nebG);q.material.opacity=.17;q.material.fog=false;q.renderOrder=-1});
+// Cometas con cola
+const cmC=cvs(256,32),cmG=cmC.getContext('2d'),cmL=cmG.createLinearGradient(0,0,256,0);cmL.addColorStop(0,'rgba(255,255,255,1)');cmL.addColorStop(.25,'rgba(224,208,247,.6)');cmL.addColorStop(1,'rgba(255,255,255,0)');cmG.fillStyle=cmL;cmG.fillRect(0,0,256,32);
+cmG.globalCompositeOperation='destination-in';const cmV=cmG.createLinearGradient(0,0,0,32);[[0,0],[.5,1],[1,0]].forEach(([q,w])=>cmV.addColorStop(q,`rgba(0,0,0,${w})`));cmG.fillStyle=cmV;cmG.fillRect(0,0,256,32);
+const cmTex=new T.CanvasTexture(cmC),cometG=new T.Group();cometG.visible=false;scene.add(cometG);
+const comets=Array.from({length:14},(_,i)=>{const u=new T.Vector3(rnd()-.5,rnd()-.5,rnd()-.5).normalize(),v=new T.Vector3(rnd()-.5,rnd()-.5,rnd()-.5);v.sub(u.clone().multiplyScalar(v.dot(u))).normalize();
+ const col=C([A,B,F][i%3]),head=glow(col,26,0,0,0,cometG),tail=new T.Mesh(new T.PlaneGeometry(1,1),new T.MeshBasicMaterial({map:cmTex,color:col,transparent:true,depthWrite:false,blending:T.AdditiveBlending,fog:false,side:T.DoubleSide}));
+ head.material.fog=false;head.renderOrder=-1;tail.renderOrder=-1;cometG.add(tail);return{u,v,w:(.05+rnd()*.07)*(i%2?1:-1),th:rnd()*6.28,head,tail,len:170+rnd()*190}});
+const fmtAlt=y=>y>=1000?(y/1000).toFixed(1)+' km':Math.round(y)+' m';
+// Pose de la cámara según el scroll: 0-.22 sube mirando al cielo, .22-.5 flota en el espacio, .5-1 desciende hasta el cenit (mirando hacia abajo)
+function prPose(p,pos,look){const a=sm(0,.22,p),b=sm(.22,.5,p),e=sm(.5,.98,p),Y=9+2391*a+300*b-2270*e,x=23*(1-e)+Math.sin(p*6)*70*b*(1-e),z=170*(1-e)+20*e+Math.cos(p*5)*50*b*(1-e),
+ w1=1-sm(.12,.3,p),yw=.6+p*3,fx=.22*w1+Math.sin(yw)*(1-w1)*(1-e),fy=w1+.05*(1-w1)*(1-e)-e,fz=-.35*w1-Math.cos(yw)*(1-w1)*(1-e)-.09*e,l=Math.hypot(fx,fy,fz)||1;
+ pos.set(x,Y,z);look.set(x+fx/l*100,Y+fy/l*100,z+fz/l*100)}
+function goProc(){if(mode==='room'||mode==='serv'||mode==='cont'||mode==='port'||mode==='ally'){pend='proc';goCity();return}if(mode!=='city')return;
+ mode='prenter';tr=0;cityScroll=scrollY;lastPr=-2;document.body.classList.add('inroom','pr');document.body.classList.remove('pr4');prWs.forEach(e=>e.classList.remove('on'));setNav(5);setHud('proc');
+ const F=new T.Vector3();prPose(0,F,prL);LK0.copy(LK);prc=new T.CatmullRomCurve3([cam.position.clone(),new T.Vector3(23,190,250),new T.Vector3(23,60,205),F])}
+function prUpd(t,dt){const on=mode==='proc'||mode==='prx'||mode==='prenter',Y=cam.position.y,spc=on?sm(250,1800,Y):0;
+ skyU.top.value.copy(c0t).lerp(c1t,spc);skyU.mid.value.copy(c0m).lerp(c1m,spc);skyU.bot.value.copy(c0b).lerp(c1b,spc);scene.fog.color.copy(skyU.bot.value).convertSRGBToLinear();
+ scene.fog.density=on?.0011+.0031*sm(430,900,Y):.0042;
+ starsU.visible=on;starsL.visible=on&&Y>700;nebG.visible=on&&Y>250;cometG.visible=on&&Y>350;
+ if(!on)return;
+ starsU.position.copy(cam.position);starsL.position.copy(cam.position);nebG.position.copy(cam.position);
+ starsU.material.opacity=starsL.material.opacity=.5+.5*sm(0,1500,Y)*(.85+.15*Math.sin(t*3));
+ if(cometG.visible){const cp=cam.position;comets.forEach(c=>{c.th+=c.w*dt*k;const ct=Math.cos(c.th),st=Math.sin(c.th);
+  kV1.copy(c.u).multiplyScalar(ct).addScaledVector(c.v,st);const hp=kV2.copy(cp).addScaledVector(kV1,720);c.head.position.copy(hp);
+  const tg=kV3.copy(c.u).multiplyScalar(-st).addScaledVector(c.v,ct).multiplyScalar(-Math.sign(c.w));c.tail.position.copy(hp).addScaledVector(tg,c.len/2);
+  const yy=kV4.copy(cp).sub(hp).normalize().cross(tg).normalize(),zz=kV1.crossVectors(tg,yy);c.tail.quaternion.setFromRotationMatrix(kM.makeBasis(tg,yy,zz));c.tail.scale.set(c.len,11,1)})}
+ if(mode==='proc'){const q=Math.min(1,prP),ix=q<.15?-1:q<.38?0:q<.6?1:q<.8?2:3;
+  if(ix!==lastPr){lastPr=ix;hudT.textContent=ix<0?'METODOLOGÍA':PRN[ix];hudN.textContent='0'+(ix+1)+' / 04';
+   document.getElementById('hp').textContent=ix<0?'Baja para entrar al espacio':ix<3?'Baja para seguir descendiendo':'Punto cenital: la ciudad desde arriba';
+   prWs.forEach((e,i)=>e.classList.toggle('on',i===ix));document.body.classList.toggle('pr4',ix===3)}}}
+// ---------- ALIANZAS: tapa de alcantarilla en la calle → ciudad subterránea con vista 360° ----------
+const mhX=23,mhZ=-92,YX=9000,YS=116,YR=2.6,AYN=['ECOSISTEMA COLABORATIVO','ÚNETE A LA COMUNIDAD','CONTENIDO COMUNITARIO','PIE DE PÁGINA'],AYT=new T.Vector3(),AYD=new T.Vector3();
+let aP=0,ayc=null,lastAy=-1,mhO=0;
+// Pozo: textura de franjas con barrotes de escalera
+const shc=cvs(64,256),shg=shc.getContext('2d');shg.fillStyle='#0e0b11';shg.fillRect(0,0,64,256);for(let i=0;i<16;i++){shg.fillStyle=i%4?'#342b3c':'#8936ff';shg.fillRect(0,i*16,64,i%4?3:6)}shg.fillStyle='#765d99';for(let i=0;i<4;i++)shg.fillRect(i*16+7,0,2,256);
+const shT=tex(shc,1);shT.repeat.set(4,5);
+const mkShaft=(len,y)=>{const m=new T.Mesh(new T.CylinderGeometry(YR,YR,len,24,1,true),bas(0xffffff,{map:shT,side:T.BackSide}));m.position.y=y;return m};
+// ---- La alcantarilla en la calle (con tapa que se abre al entrar) ----
+const mhG=new T.Group();mhG.position.set(mhX,0,mhZ);scene.add(mhG);
+{const d0=new T.Mesh(new T.CircleGeometry(YR,40),bas(0x0e0b11));d0.rotation.x=-Math.PI/2;d0.position.y=.07;mhG.add(d0);
+ const t1=new T.Mesh(new T.TorusGeometry(YR+.3,.16,8,48),bas(A));t1.rotation.x=Math.PI/2;t1.position.y=.14;mhG.add(t1);
+ const t2=new T.Mesh(new T.TorusGeometry(YR+1.2,.07,6,48),bas(B,Object.assign({opacity:.8},add)));t2.rotation.x=Math.PI/2;t2.position.y=.12;mhG.add(t2);
+ mhG.add(mkShaft(40,-20));
+ const bm2=new T.Mesh(new T.CylinderGeometry(YR*.85,YR*1.1,18,24,1,true),bas(A,Object.assign({opacity:.1,side:T.DoubleSide},add)));bm2.position.y=9;mhG.add(bm2)}
+const mhLid=new T.Group();mhLid.position.y=.16;mhG.add(mhLid);
+{const lm=new T.MeshStandardMaterial({color:0x5b5366,metalness:.85,roughness:.3,envMapIntensity:1.8,emissive:0x19141d});mhLid.add(new T.Mesh(new T.CylinderGeometry(YR+.15,YR+.15,.32,40),lm));
+ const lr=new T.Mesh(new T.TorusGeometry(1.8,.07,6,40),bas(A));lr.rotation.x=Math.PI/2;lr.position.y=.2;mhLid.add(lr);
+ [0,Math.PI/2].forEach(a=>{const m=new T.Mesh(new T.BoxGeometry(YR*1.7,.04,.14),bas(B));m.position.y=.2;m.rotation.y=a;mhLid.add(m)})}
+glow(A,22,mhX,.9,mhZ);glow(B,12,mhX,-6,mhZ);
+const msc=cvs(512,128),mhT=new T.CanvasTexture(msc);
+function drawMs(){const q=msc.getContext('2d');q.clearRect(0,0,512,128);q.font='700 64px "Chakra Petch",sans-serif';q.textAlign='center';q.shadowColor='#b58cff';q.shadowBlur=18;q.fillStyle='#b58cff';q.fillText('COMUNIDAD ↓',256,88,490);mhT.needsUpdate=true}
+drawMs();document.fonts.load('700 64px "Chakra Petch"').finally(drawMs);
+const mhSign=new T.Mesh(new T.PlaneGeometry(13,3.25),bas(0xffffff,Object.assign({map:mhT,side:T.DoubleSide},add)));mhSign.position.set(mhX,9.5,mhZ);scene.add(mhSign);
+const mhSt=Array.from({length:5},(_,i)=>{const s=new T.Sprite(new T.SpriteMaterial({map:CT[i%3],transparent:true,depthWrite:false,color:0xbea8d1,opacity:0}));scene.add(s);return{s,p:i/5}});
+// ---- Ciudad subterránea (lejos de la ciudad, como la sala de NOSOTROS) ----
+const yG=new T.Group();yG.position.x=YX;scene.add(yG);
+const ya=(o,x,y,z)=>{o.position.set(x,y,z);yG.add(o);return o};
+const yfc=cvs(512,512),yfg=yfc.getContext('2d');yfg.fillStyle='#0f0c11';yfg.fillRect(0,0,512,512);
+for(let r=0;r<16;r++)for(let q=-1;q<9;q++){yfg.fillStyle='rgb('+(30+rnd()*16|0)+','+(24+rnd()*14|0)+','+(40+rnd()*22|0)+')';yfg.fillRect(q*64+(r%2?32:0)+2,r*32+2,60,28)}
+const yfT=tex(yfc,1);yfT.repeat.set(26,26);
+ya(new T.Mesh(new T.PlaneGeometry(240,240),new T.MeshStandardMaterial({map:yfT,roughness:.28,metalness:.35,envMapIntensity:1.8})),0,0,0).rotation.x=-Math.PI/2;
+const ywc=cvs(512,256),ywg=ywc.getContext('2d');ywg.fillStyle='#231c29';ywg.fillRect(0,0,512,256);
+for(let i=0;i<700;i++){ywg.fillStyle='rgba('+(36+rnd()*28|0)+','+(26+rnd()*26|0)+','+(52+rnd()*44|0)+','+(.25+rnd()*.5)+')';ywg.fillRect(rnd()*512,rnd()*256,6+rnd()*40,10+rnd()*60)}
+const ywT=tex(ywc,1);ywT.repeat.set(6,1);const ywM=new T.MeshStandardMaterial({map:ywT,roughness:.9,metalness:.1,envMapIntensity:.6});
+[[0,-120,0],[0,120,Math.PI],[120,0,-Math.PI/2],[-120,0,Math.PI/2]].forEach(([x,z,r])=>{ya(new T.Mesh(new T.PlaneGeometry(240,70),ywM),x,35,z).rotation.y=r});
+// Techo con el hueco por donde se baja
+const ycs=new T.Shape();ycs.moveTo(-120,-120);ycs.lineTo(120,-120);ycs.lineTo(120,120);ycs.lineTo(-120,120);ycs.closePath();const ych=new T.Path();ych.absarc(0,0,YR,0,Math.PI*2,true);ycs.holes.push(ych);
+ya(new T.Mesh(new T.ShapeGeometry(ycs,32),new T.MeshStandardMaterial({color:0x18141c,roughness:.9,metalness:.2,side:T.DoubleSide})),0,70,0).rotation.x=Math.PI/2;
+ya(mkShaft(52,96),0,96,0);
+// Columna de luz que baja del hueco hasta la plaza central
+ya(new T.Mesh(new T.CylinderGeometry(YR*.9,5,70,24,1,true),bas(F,Object.assign({opacity:.07,side:T.DoubleSide},add))),0,35,0);
+ya(new T.Mesh(new T.CylinderGeometry(8,8.6,.5,48),new T.MeshStandardMaterial({color:0x2d2833,metalness:.9,roughness:.2,envMapIntensity:2})),0,.25,0);
+[[9.2,A],[13,B],[17,A]].forEach(([r,c])=>{const m=new T.Mesh(new T.TorusGeometry(r,.15,6,64),bas(c));m.rotation.x=Math.PI/2;ya(m,0,.1,0)});
+for(let i=0;i<8;i++){const a=i*Math.PI/4+Math.PI/8,m=new T.Mesh(new T.BoxGeometry(.7,.05,82),bas(i%2?A:B,Object.assign({opacity:.7},add)));ya(m,Math.sin(a)*57,.07,Math.cos(a)*57).rotation.y=a}
+[34,62,90].forEach((r,i)=>{const m=new T.Mesh(new T.TorusGeometry(r,.2,6,128),bas(i%2?A:B,Object.assign({opacity:.55},add)));m.rotation.x=Math.PI/2;ya(m,0,.07,0)});
+const yMt=new T.MeshStandardMaterial({color:0x5b5366,metalness:.85,roughness:.3,envMapIntensity:1.6}),yRM=mkM(0x5b5366,.5,0x19141d),dMt=[A,B,F].map(c=>bas(c,Object.assign({opacity:.9},add))),yl=[[],[],[]],yAn=[];
+// Casas y locales en anillos alrededor de la plaza
+function yHouse(r,a,w,h,i){const g1=new T.BoxGeometry(w,h,w),u=g1.attributes.uv;for(let q=0;q<u.count;q++)u.setXY(q,u.getX(q)*w/14,u.getY(q)*h/32);
+ const sn=Math.sin(a),cn=Math.cos(a),o=ya(new T.Mesh(g1,M[i%4]),sn*r,h/2,cn*r);o.rotation.y=a+Math.PI;
+ if(i%5){ya(new T.Mesh(new T.ConeGeometry(w*.8,w*.55,4),yRM),sn*r,h+w*.275,cn*r).rotation.y=a+Math.PI+Math.PI/4}
+ else ya(new T.Mesh(new T.BoxGeometry(w+.5,.5,w+.5),dMt[i%3]),sn*r,h+.25,cn*r);
+ const f=r-w/2-.06,dh=Math.min(4,h*.4);
+ ya(new T.Mesh(new T.PlaneGeometry(w*.26,dh),dMt[(i+1)%3]),sn*f,dh/2,cn*f).rotation.y=a+Math.PI;
+ ya(new T.Mesh(new T.BoxGeometry(w*.55,.8,.25),dMt[(i+2)%3]),sn*(f-.05),dh+1.1,cn*(f-.05)).rotation.y=a+Math.PI;
+ yl[i%3].push(sn*(f-.6),dh+3,cn*(f-.6))}
+[[34,12,5,9],[48,18,7,13],[78,22,10,20],[100,28,14,26]].forEach(([r,n,h0,h1],ri)=>{for(let i=0;i<n;i++){const a=i/n*Math.PI*2+(rnd()-.5)*.1,w=Math.min(11,r*Math.PI*2/n*.7)*(.8+rnd()*.25);
+ if(ri<2&&[0,1,2,3].some(j=>{const d=(((a-(j+.5)*Math.PI/2)%(Math.PI*2))+Math.PI*2)%(Math.PI*2);return Math.min(d,Math.PI*2-d)<.5}))continue;
+ yHouse(r,a,w,h0+rnd()*(h1-h0),i+ri)}});
+yl.forEach((p,i)=>{const gg=new T.BufferGeometry();gg.setAttribute('position',new T.BufferAttribute(new Float32Array(p),3));ya(new T.Points(gg,new T.PointsMaterial(Object.assign({size:8,map:GT,color:[A,B,F][i],opacity:.95},add))),0,0,0)});
+// Columnas y tuberías del techo
+for(let i=0;i<12;i++){const a=i*Math.PI/6,x=Math.sin(a)*112,z=Math.cos(a)*112;ya(new T.Mesh(new T.CylinderGeometry(2.6,3.2,70,10),yMt),x,35,z);[12,34,56].forEach((y,q)=>{const t=new T.Mesh(new T.TorusGeometry(2.9,.14,6,20),bas(q%2?A:B));t.rotation.x=Math.PI/2;ya(t,x,y,z)})}
+for(let i=-5;i<5;i++){const x=(i+.5)*24,p=new T.Mesh(new T.CylinderGeometry(.9,.9,240,8),yMt);p.rotation.x=Math.PI/2;ya(p,x,66,0);ya(new T.Mesh(new T.BoxGeometry(.25,.25,240),bas(i%2?A:B)),x+1,66,0)}
+// Cuatro "distritos": cada uno con su cartel y la información que se muestra al girar
+const ysC=[0,1,2,3].map(()=>{const c=cvs(1024,512);return{c,tx:tex(c,1)}}),YT=[['ECOSISTEMA','COLABORATIVO'],['ÚNETE','A LA COMUNIDAD'],['CONTENIDO','COMUNITARIO'],['CANALES','DEL EQUIPO']];
+function drawYS(){ysC.forEach((q,j)=>{const g9=q.c.getContext('2d'),gr=g9.createLinearGradient(0,0,0,512);gr.addColorStop(0,'#221c28');gr.addColorStop(1,'#0c0a0e');g9.fillStyle=gr;g9.fillRect(0,0,1024,512);
+ g9.strokeStyle=ctHex[j];g9.lineWidth=8;g9.shadowColor=ctHex[j];g9.shadowBlur=24;g9.strokeRect(14,14,996,484);g9.shadowBlur=0;g9.lineWidth=2;g9.strokeRect(34,34,956,444);
+ g9.fillStyle=ctHex[j];g9.textAlign='center';g9.font='700 44px "Chakra Petch",sans-serif';g9.fillText('0'+(j+1)+' / 04',512,110);
+ g9.font='700 130px "Chakra Petch",sans-serif';g9.shadowColor=ctHex[j];g9.shadowBlur=22;g9.fillText(YT[j][0],512,260,900);g9.shadowBlur=0;g9.fillRect(402,300,220,6);
+ g9.font='500 54px "Chakra Petch",sans-serif';g9.fillStyle='#f4eeff';g9.fillText(YT[j][1],512,400,900);q.tx.needsUpdate=true})}
+drawYS();Promise.all([document.fonts.load('700 40px "Chakra Petch"'),document.fonts.load('500 40px "Chakra Petch"')]).finally(drawYS);
+const ytc=cvs(256,160),ytg=ytc.getContext('2d');ytg.fillStyle='#130f17';ytg.fillRect(0,0,256,160);ytg.strokeStyle='#8936ff';ytg.lineWidth=4;ytg.strokeRect(2,2,252,156);for(let i=0;i<8;i++){ytg.fillStyle=lc[i%3];ytg.globalAlpha=.8;ytg.fillRect(14,16+i*17,40+rnd()*170,8)}const ytT=tex(ytc,1);
+for(let j=0;j<4;j++){const an=(j+.5)*Math.PI/2,sn=Math.sin(an),cn=Math.cos(an),at=(r,o,y)=>[sn*r+cn*o,y,cn*r-sn*o],pl=(m,r,o,y)=>ya(m,...at(r,o,y)),col=ctCol[j];
+ pl(new T.Mesh(new T.BoxGeometry(37.6,19.6,1.4),dark),63,0,24).rotation.y=an+Math.PI;
+ pl(new T.Mesh(new T.PlaneGeometry(36,18),new T.MeshBasicMaterial({map:ysC[j].tx,color:0xe0dae6})),62.1,0,24).rotation.y=an+Math.PI;
+ pl(new T.LineSegments(new T.EdgesGeometry(new T.PlaneGeometry(36.8,18.8)),new T.LineBasicMaterial({color:col})),62,0,24).rotation.y=an+Math.PI;
+ [-15,15].forEach(o=>pl(new T.Mesh(new T.BoxGeometry(1.2,15,1.2),dark),63,o,7.5));
+ const gg2=glow(col,46,...at(60,0,24),yG);gg2.material.opacity=.45;
+ if(j===0){[0,1,2].forEach(q=>{const t=new T.Mesh(new T.TorusGeometry(5+q*2.2,.28,8,56),bas([A,B,F][q]));pl(t,38,0,11);yAn.push([t,.5+q*.2,.3*(q%2?1:-1)])});glow(col,24,...at(38,0,11),yG)}
+ if(j===1){for(let q=0;q<5;q++){const d=new T.Group();d.position.set(...at(34,-14+q*7,0));d.rotation.y=an+Math.PI;yG.add(d);const b1=new T.Mesh(new T.BoxGeometry(5,2,2.4),yMt);b1.position.y=1;d.add(b1);const s1=new T.Mesh(new T.PlaneGeometry(4.4,2.8),new T.MeshBasicMaterial({map:ytT}));s1.position.set(0,3.7,-.3);s1.rotation.x=-.12;d.add(s1)}}
+ if(j===2){[-13,0,13].forEach((o,q)=>{const c3=[A,B,F][q],oc=new T.Mesh(new T.OctahedronGeometry(3.2),new T.MeshStandardMaterial({color:0x5b5366,emissive:c3,emissiveIntensity:.8,metalness:.7,roughness:.2,envMapIntensity:2}));pl(oc,40,o,9);yAn.push([oc,.7,.4]);
+  const pr=new T.Mesh(new T.TorusGeometry(4.2,.14,6,40),bas(c3));pr.rotation.x=Math.PI/2;pl(pr,40,o,.12);glow(c3,14,...at(40,o,9),yG)})}
+ if(j===3){for(let q=0;q<4;q++){const c4=[A,B,F,B][q],s2=new T.Group();s2.position.set(...at(34,-15+q*10,0));s2.rotation.y=an+Math.PI;yG.add(s2);const b2=new T.Mesh(new T.BoxGeometry(6,3,3.4),yMt);b2.position.y=1.5;s2.add(b2);const cp=new T.Mesh(new T.BoxGeometry(7.4,.4,5),bas(c4));cp.position.y=5.4;s2.add(cp);
+  [[-3.2,-2],[3.2,-2],[-3.2,2],[3.2,2]].forEach(([x,z])=>{const po=new T.Mesh(new T.CylinderGeometry(.12,.12,5.4,6),yMt);po.position.set(x,2.7,z);s2.add(po)});glow(c4,8,0,4.6,2.2,s2)}}}
+const yHo=ya(new T.Mesh(new T.IcosahedronGeometry(2.4,1),bas(F,{wireframe:true})),0,6,0);yAn.push([yHo,.8,.4]);
+const yFl=Array.from({length:40},(_,i)=>({s:glow([A,B,F][i%3],2.4,YX,0,0),r:12+rnd()*95,y:2+rnd()*40,v:(.06+rnd()*.2)*(i%2?1:-1),p:rnd()*7}));
+const yst=Array.from({length:10},(_,i)=>{const s=new T.Sprite(new T.SpriteMaterial({map:CT[i%3],transparent:true,depthWrite:false,color:0xbea8d1,opacity:0})),a=rnd()*6.28,r=18+rnd()*75;s.position.set(YX+Math.sin(a)*r,1,Math.cos(a)*r);scene.add(s);return{s,p:rnd()}});
+const ylC=new T.PointLight(A,2.2,95,2);ylC.position.set(YX,14,0);scene.add(ylC);const ylD=new T.PointLight(B,1.6,130,2);ylD.position.set(YX,40,0);scene.add(ylD);
+// Cámara 360°: se queda cerca de la plaza y gira; el panel de información cambia por cuartos
+function alPose(aa,pos,lk,t){const as=cam.aspect,mob=as<1.1,sh2=mob?0:Math.min(9,as*3.5),nx=Math.sin(aa),nz=Math.cos(aa),y=9.5+Math.sin(t*.5)*.25*k;
+ pos.set(YX+nx*6-nz*sh2,y,nz*6+nx*sh2);lk.set(YX+nx*66-nz*sh2,y+1.5-(mob?7:0),nz*66+nx*sh2)}
+const apn=document.getElementById('alp'),aps=[...document.querySelectorAll('#alp .cs')],af=document.getElementById('af');
+const afT=()=>{const d=new FormData(af);return'Comunidad - STRATOS\nNombre: '+d.get('n')+'\nUsuario o institución: '+d.get('e')+'\nCorreo: '+d.get('c')+'\nTeléfono: '+d.get('t')+'\nTipo de aporte: '+d.get('s')+'\nMensaje: '+d.get('m')};
+af.addEventListener('submit',e=>{e.preventDefault();location.href='mailto:samuelvalencia@ucundinamarca.edu.co,santiagoserrano@ucundinamarca.edu.co,dssalamanca@ucundinamarca.edu.co?subject='+encodeURIComponent('Comunidad Stratos - '+(new FormData(af).get('e')||''))+'&body='+encodeURIComponent(afT())});
+document.getElementById('afw').addEventListener('click',e=>{if(!af.reportValidity())return;const b=e.currentTarget;try{navigator.clipboard.writeText(afT());b.textContent='¡Copiado!'}catch(_){b.textContent='Copia manual'}});
+function goAlly(){if(mode==='room'||mode==='serv'||mode==='cont'||mode==='port'){pend='ally';goCity();return}if(mode!=='city')return;
+ mode='aenter';tr=0;cityScroll=scrollY;lastAy=-1;document.body.classList.add('inroom');setNav(6);setHud('ally');LK0.copy(LK);
+ ayc=new T.CatmullRomCurve3([cam.position.clone(),new T.Vector3(mhX+34,130,mhZ+120),new T.Vector3(mhX+8,40,mhZ+38),new T.Vector3(mhX+1,14,mhZ+15),new T.Vector3(mhX,3.2,mhZ+.2),new T.Vector3(mhX,-13,mhZ)])}
+function ayUpd(t,dt){if(mode==='adown'||mode==='ally'||mode==='ax')scene.fog.density=.0075;mhSign.lookAt(cam.position.x,mhSign.position.y,cam.position.z);
+ const mo=mode==='aenter'?sm(.35,.62,tr):(mode==='adown'||mode==='ally'||mode==='ax')?1:0;mhO+=(mo-mhO)*Math.min(1,dt*(mode==='aenter'?30:2));mhLid.position.x=mhO*3.6;mhLid.rotation.y=mhO*1.1;
+ mhSt.forEach(q=>{q.p=(q.p+dt*.16*k)%1;const w=3+q.p*7;q.s.position.set(mhX+Math.sin(q.p*5+q.s.id)*.5,.8+q.p*8,mhZ);q.s.scale.set(w,w,1);q.s.material.opacity=Math.sin(q.p*Math.PI)*.3});
+ if(mode==='ally'){const ix=Math.min(3,Math.floor(Math.min(1,aP)*4));if(ix!==lastAy){lastAy=ix;hudT.textContent=AYN[ix];hudN.textContent='0'+(ix+1)+' / 04';aps.forEach((e,i)=>e.classList.toggle('on',i===ix))}}
+ yAn.forEach(([o,a1,a2])=>{o.rotation.y+=dt*a1*k;o.rotation.x+=dt*a2*k});
+ yFl.forEach(c=>{const q=c.p+t*c.v*k;c.s.position.set(YX+Math.cos(q)*c.r,c.y+Math.sin(q*3)*2,Math.sin(q)*c.r)});
+ yst.forEach(q=>{q.p=(q.p+dt*.1*k)%1;q.s.position.y=1+q.p*14;const w=5+q.p*9;q.s.scale.set(w,w,1);q.s.material.opacity=Math.sin(q.p*Math.PI)*.22});
+ ylC.intensity=2.2+Math.sin(t*3)*.15*k}
+// ---------- Cámara, scroll y navegación ----------
+const ld=document.getElementById('ld'),lpt=document.getElementById('lp'),cu=document.getElementById('cu');
+const bgg=new T.CylinderGeometry(16,.4,200,20,1,true);bgg.translate(0,100,0);const bgp=new T.Group();bgp.position.y=262;scene.add(bgp);[0,1].forEach(i=>{const m=new T.Mesh(bgg,bas(i?A:B,Object.assign({opacity:.07,side:T.DoubleSide},add)));m.rotation.z=i?.7:-.7;bgp.add(m)});
+// Posprocesado: bloom, aberración cromática, desenfoque de lente, viñeta, grano y tonos de cine
+const comp=new T.EffectComposer(R),bloom=new T.UnrealBloomPass(new T.Vector2(innerWidth,innerHeight),1,.7,.6);comp.addPass(new T.RenderPass(scene,cam));comp.addPass(bloom);
+const FX=new T.ShaderPass({uniforms:{tDiffuse:{value:null},t:{value:0},vel:{value:0}},vertexShader:'varying vec2 u;void main(){u=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+fragmentShader:`uniform sampler2D tDiffuse;uniform float t,vel;varying vec2 u;
+float h(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}
+vec3 aces(vec3 x){return clamp((x*(2.51*x+.03))/(x*(2.43*x+.59)+.14),0.,1.);}
+void main(){vec2 c=u-.5;float d=dot(c,c);vec2 q=c*(1.+d*.08)+.5,dir=c*(.0015+d*.012+vel*.02);
+vec3 col=vec3(texture2D(tDiffuse,q+dir).r,texture2D(tDiffuse,q).g,texture2D(tDiffuse,q-dir).b),b=vec3(0.);
+for(int i=1;i<=4;i++)b+=texture2D(tDiffuse,q-c*float(i)*.012*(d*2.+vel*2.)).rgb;
+col=mix(col,b/4.,clamp(d*2.2+vel*.6,0.,.7));col=pow(aces(col*1.15),vec3(1./2.2));
+col*=1.-smoothstep(.25,.85,d*2.2)*.7;col+=(h(u*vec2(1920.,1080.)+t)-.5)*.045;gl_FragColor=vec4(col,1.);}`});
+comp.addPass(FX);
+const V=a=>a.map(p=>new T.Vector3(...p)),
+path0=new T.CatmullRomCurve3(V([[150,260,300],[23,110,230],[23,8,170],[23,7,60],[23,9,-30],[23,55,-70],[23,140,-23],[23,215,22],[40,228,50]])),
+look0=new T.CatmullRomCurve3(V([[0,100,0],[23,20,150],[23,8,60],[23,9,-40],[0,110,-10],[0,110,0],[0,170,0],[0,215,0],[-120,50,-140]]));
+// Recorrido por tramos: inicio..servicios y subida del edificio (contacto) quedan IGUAL que antes.
+// Entre medio: Portafolio+Proceso = vuelta por las calles alrededor de la torre; Alianzas = llegada y arranque de la subida.
+const D0=.5,D1=.68,C0=.8,
+dPos=new T.CatmullRomCurve3(V([[23,9,-30],[23,10,-52],[23,12,-69],[0,13,-69],[-23,14,-69],[-23,15,-46],[-23,14,-23],[0,12,-26],[23,9,-30]]),false,'centripetal'),
+dLook=new T.CatmullRomCurve3(V([[0,110,-10],[0,90,-5],[0,85,0],[0,90,0],[0,80,0],[0,100,0],[0,110,0],[0,110,-5],[0,110,-10]]),false,'centripetal');
+function route(c0,dc,isPos){return{getPoint(p,tg){p=Math.min(1,Math.max(0,p));let r;
+ if(p<=D0)r=c0.getPoint(p);
+ else if(p<D1){const s=(p-D0)/(D1-D0),t=dPos.getUtoTmapping(s);r=dc.getPoint(t);
+  if(isPos){const e=Math.sin(s*Math.PI);r.y+=Math.sin(s*Math.PI*6)*1.6*e;r.x+=Math.sin(s*Math.PI*9)*.8*e}else r.y+=Math.sin(s*Math.PI*4+1)*5*Math.sin(s*Math.PI)}
+ else if(p<C0)r=c0.getPoint(.5+(p-D1)/(C0-D1)*.3);
+ else r=c0.getPoint(p);
+ return tg?tg.copy(r):r}}}
+const path=route(path0,dPos,1),look=route(look0,dLook,0);
+const panes=[...document.querySelectorAll('.ui')],nav=document.querySelector('.dots'),al=document.getElementById('al'),stops=[0,.19,.39,.545,.635,.74,1];
+function mx(){return Math.max(1,document.documentElement.scrollHeight-innerHeight)}
+const dots=['Inicio','Proyecto','Módulos','Resultados','Metodología','Comunidad','Contacto'].map((n,i)=>{const b=document.createElement('button');b.setAttribute('aria-label',n);b.onclick=()=>scrollTo({top:stops[i]*mx(),behavior:'smooth'});nav.appendChild(b);return b});
+let ps=0,ptr=0,py=0,fl=-1,last=0,nf=6,fx=0,sp=0,sy=0,vel=0,mxp=0,myp=0,cxp=0,cyp=0,loaded=0;const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,k=reduce?0:1;
+addEventListener('pointermove',e=>{ptr=(e.clientX/innerWidth-.5)*2;py=(e.clientY/innerHeight-.5)*2;mxp=e.clientX;myp=e.clientY});
+function size(){R.setSize(innerWidth,innerHeight);comp.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()}addEventListener('resize',size);size();
+function frame(ms){const t=ms/1000,dt=Math.min(t-last,.05);last=t;
+ const inRoom=mode==='room'||mode==='exit',inSv=mode==='serv'||mode==='sx'||mode==='senter',inCt=mode==='cont'||mode==='cx'||mode==='centr',inPt=mode==='port'||mode==='px'||mode==='penter',inPr=mode==='proc'||mode==='prx'||mode==='prenter',inAl=mode==='aenter'||mode==='adown'||mode==='ally'||mode==='ax',ug2=mode==='adown'||mode==='ally'||mode==='ax',aOld=aP,pOld=ps,rOld=rmP,sOld=svP,cOld=cP,tOld=ptP,qOld=prP;
+ if(mode==='city')ps+=(Math.min(1,scrollY/mx())-ps)*Math.min(1,dt*3);
+ else if(mode==='enter'){tr=Math.min(1,tr+dt/3.6);ps=ps0+(PD-ps0)*sm(0,.5,tr);fa=sm(.82,1,tr);if(tr>=1){mode='room';rmP=0;scrollTo(0,0);document.body.classList.add('rm')}}
+ else if(mode==='exit'){tr=Math.min(1,tr+dt/.9);fa=sm(0,.8,tr);if(tr>=1){mode='city';document.body.classList.remove('inroom');setNav(0);ps=PD;scrollTo(0,cityScroll);if(pend){const g3=pend;pend=null;runPend(g3)}}}
+ else if(mode==='senter'){tr=Math.min(1,tr+dt/4.5);if(tr>=1){mode='serv';svP=0;scrollTo(0,0);document.body.classList.add('rm')}}
+ else if(mode==='sx'){tr=Math.min(1,tr+dt/.9);fa=sm(0,.8,tr);if(tr>=1){mode='city';document.body.classList.remove('inroom','rm');setNav(0);scrollTo(0,cityScroll);if(pend){const g3=pend;pend=null;runPend(g3)}}}
+ else if(mode==='centr'){tr=Math.min(1,tr+dt/4.5);if(tr>=1){mode='cont';cP=0;scrollTo(0,0);document.body.classList.add('rm','ct')}}
+ else if(mode==='cx'){tr=Math.min(1,tr+dt/.9);fa=sm(0,.8,tr);if(tr>=1){mode='city';document.body.classList.remove('inroom','rm','ct');setNav(0);scrollTo(0,cityScroll);if(pend){const g3=pend;pend=null;runPend(g3)}}}
+ else if(mode==='penter'){tr=Math.min(1,tr+dt/4.5);if(tr>=1){mode='port';ptP=0;scrollTo(0,0);document.body.classList.add('rm')}}
+ else if(mode==='px'){tr=Math.min(1,tr+dt/.9);fa=sm(0,.8,tr);if(tr>=1){mode='city';document.body.classList.remove('inroom','rm');setNav(0);scrollTo(0,cityScroll);if(pend){const g3=pend;pend=null;runPend(g3)}}}
+ else if(mode==='prenter'){tr=Math.min(1,tr+dt/4);if(tr>=1){mode='proc';prP=0;scrollTo(0,0);document.body.classList.add('rm','pr')}}
+ else if(mode==='prx'){tr=Math.min(1,tr+dt/.9);fa=sm(0,.8,tr);if(tr>=1){mode='city';document.body.classList.remove('inroom','rm','pr','pr4');setNav(0);scrollTo(0,cityScroll);if(pend){const g3=pend;pend=null;runPend(g3)}}}
+ else if(mode==='proc')prP+=(Math.min(1,scrollY/mx())-prP)*Math.min(1,dt*3);
+ else if(mode==='aenter'){tr=Math.min(1,tr+dt/6);fa=sm(.84,1,tr);if(tr>=1){mode='adown';tr=0}}
+ else if(mode==='adown'){tr=Math.min(1,tr+dt/4.6);if(tr>=1){mode='ally';aP=0;scrollTo(0,0);document.body.classList.add('rm','al2')}}
+ else if(mode==='ax'){tr=Math.min(1,tr+dt/.9);fa=sm(0,.8,tr);if(tr>=1){mode='city';document.body.classList.remove('inroom','rm','al2');setNav(0);scrollTo(0,cityScroll);if(pend){const g3=pend;pend=null;runPend(g3)}}}
+ else if(mode==='ally')aP+=(Math.min(1,scrollY/mx())-aP)*Math.min(1,dt*3);
+ else if(mode==='port')ptP+=(Math.min(1,scrollY/mx())-ptP)*Math.min(1,dt*3);
+ else if(mode==='cont')cP+=(Math.min(1,scrollY/mx())-cP)*Math.min(1,dt*3);
+ else if(mode==='serv')svP+=(Math.min(1,scrollY/mx())-svP)*Math.min(1,dt*3);
+ else rmP+=(Math.min(1,scrollY/mx())-rmP)*Math.min(1,dt*3);
+ if(mode==='room'||mode==='city'||mode==='serv'||mode==='senter'||mode==='cont'||mode==='centr'||mode==='port'||mode==='penter'||mode==='proc'||mode==='prenter'||mode==='adown'||mode==='ally')fa=Math.max(0,fa-dt*1.2);
+ const dp=inRoom?rmP-rOld:inSv?svP-sOld:inCt?cP-cOld:inPt?ptP-tOld:inPr?prP-qOld:inAl?(mode==='aenter'?.003:mode==='adown'?.004*(1-tr):aP-aOld):ps-pOld;vel+=(Math.min(1,Math.abs(dp)/Math.max(dt,.001)*3)-vel)*Math.min(1,dt*6);sp+=(ptr-sp)*Math.min(1,dt*4);sy+=(py-sy)*Math.min(1,dt*4);const p=ps,a=path.getPoint(p),b=look.getPoint(p);
+ let ca=a,cb=b;
+ if(mode==='enter'&&tr>.5){const e=sm(.5,.95,tr);ca=A2.lerpVectors(a,DE,e);cb=B2.lerpVectors(b,DC,Math.min(1,e*3))}
+ if(inRoom){ca=A2.set(RX+Math.sin(rmP*2.4-1.2)*2.5,8.6+Math.sin(t*.5)*.15,17-rmP*1.5);cb=B2.set(RX,8,0)}
+ if(mode==='senter'){const u=tr*tr*(3-2*tr);ca=svc.getPoint(u,A2);cb=B2.lerpVectors(LK0,svL,sm(.25,.95,tr))}
+ else if(mode==='serv'||mode==='sx'){svPos(svP,A2,B2);ca=A2;cb=B2}
+ if(mode==='centr'){const u=tr*tr*(3-2*tr);ca=ctc.getPoint(u,A2);cb=B2.lerpVectors(LK0,ctL,sm(.25,.95,tr))}
+ else if(mode==='cont'||mode==='cx'){ctPose(cP*4,A2,B2);ca=A2;cb=B2}
+ if(mode==='penter'){const u=tr*tr*(3-2*tr);ca=ptc.getPoint(u,A2);cb=B2.lerpVectors(LK0,ptL,sm(.25,.95,tr))}
+ else if(mode==='port'||mode==='px'){ptPos(ptP,A2,B2);ca=A2;cb=B2}
+ if(mode==='prenter'){const u=tr*tr*(3-2*tr);ca=prc.getPoint(u,A2);cb=B2.lerpVectors(LK0,prL,sm(.25,.95,tr))}
+ else if(mode==='proc'||mode==='prx'){prPose(prP,A2,B2);ca=A2;cb=B2}
+ if(mode==='aenter'){const u=tr*tr*(3-2*tr);ca=ayc.getPoint(u,A2);cb=B2.lerpVectors(LK0,AYT.set(mhX,0,mhZ),sm(.05,.45,tr)).lerp(AYD.set(mhX,ca.y-16,mhZ-3),sm(.6,.85,tr))}
+ else if(mode==='adown'){alPose(0,A2,B2,t);const e=tr*tr*(3-2*tr),e2=sm(.5,1,tr),w=sm(.3,.95,tr),py2=YS+(A2.y-YS)*e,tx=B2.x,ty=B2.y,tz=B2.z,px=A2.x,pz=A2.z;A2.set(YX+(px-YX)*e2,py2,pz*e2);B2.set(YX+(tx-YX)*w,(py2-16)+(ty-py2+16)*w,-3+(tz+3)*w);ca=A2;cb=B2}
+ else if(mode==='ally'||mode==='ax'){alPose(aP*Math.PI*2,A2,B2,t);ca=A2;cb=B2}
+ LK.copy(cb);
+ const ofs=(mode==='aenter'&&tr>.55)||mode==='adown'?.2:1;cam.position.set(ca.x+sp*2.5*ofs,ca.y-sy*1.5,ca.z);cam.lookAt(cb.x+sp*8,cb.y-sy*5,cb.z);cam.rotateZ(-sp*.035);cam.fov=60+vel*14;cam.updateProjectionMatrix();sky.position.copy(cam.position);
+ moon.target.position.set(cam.position.x*.5,0,cam.position.z*.5);moon.position.copy(moon.target.position).add(new T.Vector3(-160,300,-100));
+ nf-=dt*k;if(nf<0){fx=1;nf=6+rnd()*9}fx*=Math.exp(-dt*5);hemi.intensity=ug2?.42:inRoom?0.5:.55+fx*(.6+.4*Math.sin(t*60));moon.intensity=ug2?.1:.7;
+ clouds.forEach(c=>{c.s.position.x+=c.v*dt*k;if(c.s.position.x>700)c.s.position.x=-700});
+ cars.forEach(c=>{c.s+=c.v*dt*k;if(c.s>235)c.s-=470;if(c.s<-235)c.s+=470;const sg=Math.sign(c.v);c.o.position.set(c.ax?c.s:c.c,0,c.ax?c.c:c.s);c.o.rotation.y=c.ax?(sg>0?Math.PI/2:-Math.PI/2):(sg>0?0:Math.PI)});
+ holo.rotation.y+=dt*.3*k;rr.rotation.z+=dt*.4*k;beacon.material.opacity=.4+.6*Math.abs(Math.sin(t*2));
+ train.forEach((m,i)=>{const q=t*.6*k-i*.14;m.position.set(Math.cos(q)*30,90.6,Math.sin(q)*30);m.rotation.y=-(q+Math.PI/2)});head.position.set(Math.cos(t*.6*k+.3)*30,90.8,Math.sin(t*.6*k+.3)*30);
+ fly.forEach(c=>{const q=c.p+t*c.v*k;c.s.position.set(Math.cos(q)*c.r,c.y,Math.sin(q)*c.r)});
+ ships.forEach(q=>{const Fn=z=>[Math.cos(z)*q.r,q.y+Math.sin(z*3+q.w)*14,Math.sin(z)*q.r],z=q.p+t*q.v*(k||.2),c=Fn(z);q.body.position.set(...c);q.body.lookAt(...Fn(z+.02*Math.sign(q.v)));q.s.position.set(...c)});
+ rain.visible=!inRoom&&!ug2&&!(inPr&&cam.position.y>320);rain.position.set(cam.position.x,Math.max(0,cam.position.y-60),cam.position.z);
+ for(let i=0;i<N;i++){const d=rd[i];d[1]-=d[3]*dt;if(d[1]<0)d[1]=120;const o=i*6;rp[o]=d[0];rp[o+1]=d[1];rp[o+2]=d[2];rp[o+3]=d[0]+.5;rp[o+4]=d[1]+3.5;rp[o+5]=d[2]}rg.attributes.position.needsUpdate=true;
+ const f=p<.1?0:p<.28?1:p<.5?2:p<.59?3:p<.68?4:p<.8?5:6;if(f!=fl){fl=f;panes.forEach((e,i)=>e.classList.toggle('on',i==f));dots.forEach((e,i)=>e.setAttribute('aria-current',i==f))}
+ al.textContent=inPr?fmtAlt(cam.position.y):Math.round(a.y+28)+' m';bgp.rotation.y+=dt*.5*k;FX.uniforms.t.value=t;FX.uniforms.vel.value=vel;cxp+=(mxp-cxp)*.2;cyp+=(myp-cyp)*.2;cu.style.transform='translate('+cxp+'px,'+cyp+'px)';mapped.forEach(q=>vm(q,t));roomUpd(t,dt);bloom.strength=ug2?.5:inRoom?.22:inSv?.12:inCt?.4:inPt?.15:inPr?.55:1;fsh.style.opacity=fa;svUpd();ctUpd(t);ptUpd();prUpd(t,dt);ayUpd(t,dt);comp.render();requestAnimationFrame(frame)}
+document.querySelectorAll('a[href="#"][data-page]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const g=a.dataset.page;if(g==='nosotros')goRoom();else if(g==='servicios')goServ();else if(g==='contacto')goCont();else if(g==='portafolio')goPort();else if(g==='proceso')goProc();else if(g==='alianzas')goAlly();else if(g==='inicio')goCity()}));
+document.getElementById('back').addEventListener('click',goCity);addEventListener('keydown',e=>{if(e.key==='Escape')goCity()});
+document.querySelectorAll('a,button').forEach(e=>{e.addEventListener('pointerenter',()=>cu.classList.add('big'));e.addEventListener('pointerleave',()=>cu.classList.remove('big'))});
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
